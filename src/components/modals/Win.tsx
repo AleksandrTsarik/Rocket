@@ -15,12 +15,31 @@ class Win extends React.Component<PropsInterface> {
     return (
       <>
         <div className="modal-background">
-          <div className="modal modal-with-console">
-            <div className="console">
+          <div className="modal modal-with-console modal-win">
+            <div className="title">Good job!</div>
+            <div className="result">
+              <div>Your Result:</div>
+              <div className="distance">
+                Distance <span>1500 pc</span>
+              </div>
+              <div className="questions">
+                Correct questions: <span>5 (10)</span>
+              </div>
+            </div>
+            <div className="best-result">
+              <div>Best Result:</div>
+              <div className="distance">
+                Distance <span>3000 pc</span>
+              </div>
+              <div className="questions">
+                Correct questions: <span>9 (10)</span>
+              </div>
+            </div>
+            {/* <div className="console">
               <div className="info-green">Сompiled successfully! </div>
               <p className="souvenir">Take a souvenir with a SEMrush firewall</p>
               <p>Press enter to exit ...</p>
-            </div>
+            </div> */}
             <div className="btn-box">
               <Link
                 to="preview"
@@ -32,7 +51,7 @@ class Win extends React.Component<PropsInterface> {
                   this.props.history.push("/preview");
                 }}
               >
-                Выход
+                exit
               </Link>
             </div>
           </div>
