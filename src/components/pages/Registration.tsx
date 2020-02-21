@@ -193,11 +193,16 @@ class Registration extends React.Component<PropsInterface, StateInterface> {
                     required={true}
                   />
                 </div>
+                {/* <button className="btn btn-block btn-primary btn-md" onClick={this.registration}>
+                  sing up
+                </button> */}
+              </form>
+              <div className="btn-box">
                 <button className="btn btn-block btn-primary btn-md" onClick={this.registration}>
                   sing up
                 </button>
-              </form>
-              <div className="logo" />
+                <div className="logo" />
+              </div>
             </div>
           </div>
         </div>

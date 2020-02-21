@@ -1,15 +1,33 @@
 .modal-background
-    top: 50%;
-    left: 50%;
-    position: fixed;
-    transform: translate(-50%, -50%);
+    top: 50%
+    left: 50%
+    position: fixed
+    transform: translate(-50%, -50%)
     display: flex
     width: 100%
     height: 100vh
     background-color: rgba(0, 0, 0, .5) 
     .modal
-        padding: 85px
+        padding: 2.4em 2em
         background: white
-        width: 70%
+        width: 24.1em
         margin: auto
         position: relative
+        font-family: $font-ubuntu-regular
+        color: $primary
+        .title
+            margin: 0
+            font-size: 1.5em
+            text-align: center
+            padding-bottom: 1em
+        .text
+            font-size: 0.9em
+            line-height: 1.45em
+            p
+                margin: 0
+                padding-bottom: 1.5em
+        .btn-box
+            margin-top: 1em
+            button
+                text-transform: uppercase
+
