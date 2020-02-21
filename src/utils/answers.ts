@@ -28,3 +28,4 @@ export const questions = [
     speed: 400,
   },
 ];
+export const letters = ["A", "B", "C", "D"];

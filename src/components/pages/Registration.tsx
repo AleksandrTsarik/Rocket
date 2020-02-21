@@ -127,12 +127,13 @@ class Registration extends React.Component<PropsInterface, StateInterface> {
   checkbox(props: { name: string; value: any; label: string; id: string; required: boolean }) {
     return (
       <>
-        <div onChange={this.onChangeHandle}>
+        <div>
           <label className="check">
             <input
               type="checkbox"
               name={props.name}
               checked={props.value}
+              onChange={this.onChangeHandle}
               className="check-input"
             />
             {props.label}

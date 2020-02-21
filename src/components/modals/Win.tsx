@@ -23,7 +23,7 @@ class Win extends React.Component<PropsInterface> {
             </div>
             <div className="btn-box">
               <Link
-                to="preview"
+                to="/"
                 className="btn btn-primary btn-md btn-block"
                 onClick={() => {
                   this.props.Dispatch(Middleware.Modal.closeAll());
@@ -35,7 +35,7 @@ class Win extends React.Component<PropsInterface> {
                       time: 88,
                     })
                   );
-                  this.props.history.push("/preview");
+                  this.props.history.push("/");
                 }}
               >
                 Выход

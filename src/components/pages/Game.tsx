@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import * as Middleware from "../../middlewares";
+import { questions, letters } from "../../utils/answers";
 
 interface PropsInterface {
   location: any;
@@ -12,6 +13,7 @@ interface PropsInterface {
 
 interface StateInterface {
   timer: number;
+  step: number;
   minutes: string;
   seconds: string;
   speed: number;
@@ -25,6 +27,7 @@ class Game extends React.Component<PropsInterface, StateInterface> {
     super(Props);
     this.state = {
       timer: 90,
+      step: 0,
       minutes: "00",
       seconds: "00",
       speed: 1500,
@@ -95,6 +98,25 @@ class Game extends React.Component<PropsInterface, StateInterface> {
     });
   }
 
+  checkAnswer(answer: number) {
+    return true;
+  }
+
+  gameStep(answer: number) {
+    if (this.state.step >= questions.length - 1) {
+      this.props.Dispatch(Middleware.Modal.open("Win"));
+    }
+    if (this.state.timer > 0) {
+      if (this.checkAnswer(answer)) {
+        this.setState({
+          step: this.state.step + 1,
+        });
+      }
+    } else {
+      this.props.Dispatch(Middleware.Modal.open("Win"));
+    }
+  }
+
   // Every second
   clock() {
     this.timeToString();
@@ -128,24 +150,29 @@ class Game extends React.Component<PropsInterface, StateInterface> {
                   </div>
                 </div>
                 <div className="game-field">
-                  <div className="question">Автор “Сказки о попе и его работнике Балде”?</div>
-                  <div className="answer">
-                    <a href="#" className="cross-box" onClick={() => this.exit()}>
-                      <div className="cross" />
-                    </a>
-                    <button className="btn btn-default btn-block btn-md">
-                      <b>A:</b> Вариант 1
-                    </button>
-                    <button className="btn btn-default btn-block btn-md">
-                      <b>B:</b> Вариант 2
-                    </button>
-                    <button className="btn btn-default btn-block btn-md">
-                      <b>C:</b> Вариант 3
-                    </button>
-                    <button className="btn btn-default btn-block btn-md">
-                      <b>D:</b> Вариант 4
-                    </button>
-                  </div>
+                  {questions[this.state.step] !== undefined ? (
+                    <>
+                      <div className="question">{questions[this.state.step].question}</div>
+                      <div className="answer">
+                        <a href="#" className="cross-box" onClick={() => this.exit()}>
+                          <div className="cross" />
+                        </a>
+                        {questions[this.state.step].answers.map((answer: string, index: number) => {
+                          return (
+                            <button
+                              key={index}
+                              onClick={() => this.gameStep(index)}
+                              className="btn btn-default btn-block btn-md"
+                            >
+                              <b>{letters[index]}:</b> {answer}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </div>
             </div>
