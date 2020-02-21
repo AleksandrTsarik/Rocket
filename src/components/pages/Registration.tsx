@@ -128,8 +128,13 @@ class Registration extends React.Component<PropsInterface, StateInterface> {
   checkbox(props: { name: string; value: any; label: string; id: string; required: boolean }) {
     return (
       <>
-        <div>
-          <label className="check">
+        <div onChange={this.onChangeHandle}>
+          <label
+            className={
+              "check " +
+              (props.required && props.value === false && this.state.errors ? "label-error" : "")
+            }
+          >
             <input
               type="checkbox"
               name={props.name}
@@ -140,30 +145,6 @@ class Registration extends React.Component<PropsInterface, StateInterface> {
             <span className="check-box" />
           </label>
         </div>
-        {/* <div>
-          <label className="check">
-            <input type="checkbox" className="check-input" />
-            second
-            <span className="check-box" />
-          </label>
-        </div> */}
-        {/* <div className="check-box">
-          <input
-            type="checkbox"
-            name={props.name}
-            checked={props.value}
-            onChange={this.onChangeHandle}
-            id={props.id}
-          />
-          <label
-            className={
-              props.required && props.value === false && this.state.errors ? "label-error" : ""
-            }
-            htmlFor={props.id}
-          >
-            {props.label}
-          </label>
-        </div> */}
       </>
     );
   }
