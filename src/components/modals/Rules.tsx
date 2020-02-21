@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import * as Middleware from "../../middlewares";
+import * as Store from "../../actions/Store";
 
 interface PropsInterface {
   location: any;
@@ -28,6 +29,7 @@ class Rules extends React.Component<PropsInterface> {
               <button
                 className="btn btn-primary btn-block btn-md"
                 onClick={() => {
+                  this.props.Dispatch(Store.Game.status("start"))
                   this.props.Dispatch(Middleware.Modal.close());
                 }}
               >

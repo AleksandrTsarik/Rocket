@@ -14,7 +14,6 @@ export default class Game {
         .create(data)
         .then((data: any[]) => {
           dispatch(Store.Game.create(data.data));
-          dispatch(Middleware.Game.status("start"));
         })
         .catch((Exception) => {});
     };

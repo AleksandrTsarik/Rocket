@@ -15,6 +15,8 @@ interface StateInterface {
   minutes: string;
   seconds: string;
   speed: number;
+  questions: any;
+  runGame: boolean;
 }
 
 class Game extends React.Component<PropsInterface, StateInterface> {
@@ -26,6 +28,8 @@ class Game extends React.Component<PropsInterface, StateInterface> {
       minutes: "00",
       seconds: "00",
       speed: 1500,
+      questions: [],
+      runGame: false,
     };
     this.timeToString = this.timeToString.bind(this);
   }
@@ -33,7 +37,24 @@ class Game extends React.Component<PropsInterface, StateInterface> {
   public componentDidMount() {
     document.title = process.env.SITE_NAME + " | Game!";
     this.props.Dispatch(Middleware.Modal.open("Rules"));
-    this.clock();
+    this.props.Dispatch(Middleware.Game.create(this.props.Store.Player.id));
+  }
+
+  componentDidUpdate(prevProps: any) {
+    if (
+      this.props.Store.Game.status === "start" &&
+      prevProps !== this.props &&
+      this.state.runGame === false
+    ) {
+      this.setState({ runGame: true }, () => this.clock());
+    }
+    if (
+      this.props.Store.Game.status === "stop" &&
+      prevProps !== this.props &&
+      this.state.runGame === true
+    ) {
+      this.exit();
+    }
   }
 
   componentWillUnmount() {
@@ -81,6 +102,8 @@ class Game extends React.Component<PropsInterface, StateInterface> {
     if (this.state.timer > 0) {
       this.setTimer();
       this.timerObj = setTimeout(() => this.clock(), 1000); // timeout дабы избежать лагов при работе с таймером
+    } else {
+      this.props.Dispatch(Middleware.Modal.open("Win"));
     }
   }
 
