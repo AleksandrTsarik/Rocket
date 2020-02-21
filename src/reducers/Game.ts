@@ -6,7 +6,7 @@ export default function Game(state = [], action: any) {
       return {
         ...state,
         status: action.data,
-      }; 
+      };
     default:
       return state;
   }

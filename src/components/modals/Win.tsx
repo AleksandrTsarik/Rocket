@@ -28,11 +28,13 @@ class Win extends React.Component<PropsInterface> {
                 onClick={() => {
                   this.props.Dispatch(Middleware.Modal.closeAll());
                   this.props.Dispatch(Middleware.Player.clear());
-                  this.props.Dispatch(Middleware.Game.finish({
-                    player_id: this.props.Store.Player.id,
-                    misstakes: 8,
-                    time: 88,
-                  }));
+                  this.props.Dispatch(
+                    Middleware.Game.finish({
+                      player_id: this.props.Store.Player.id,
+                      misstakes: 8,
+                      time: 88,
+                    })
+                  );
                   this.props.history.push("/preview");
                 }}
               >

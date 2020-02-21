@@ -26,5 +26,5 @@ export const questions = [
     answers: ["lala", "lolo", "keke", "nooo!"],
     right: 4,
     speed: 400,
-  }
+  },
 ];
