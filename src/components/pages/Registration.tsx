@@ -62,7 +62,6 @@ class Registration extends React.Component<PropsInterface, StateInterface> {
 
   registration(event: any) {
     event.preventDefault();
-    this.props.history.push("/game");
     if (this.checkInputs()) {
       this.props.Dispatch(
         Middleware.Player.create({

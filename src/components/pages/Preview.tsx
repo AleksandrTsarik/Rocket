@@ -18,6 +18,7 @@ class Preview extends React.Component<PropsInterface, {}> {
   public componentDidMount() {
     document.title = process.env.SITE_NAME + " | Preview";
     this.props.Dispatch(Middleware.Modal.closeAll());
+    this.props.Dispatch(Middleware.Player.clear());
   }
 
   public render() {

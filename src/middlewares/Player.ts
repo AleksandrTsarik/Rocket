@@ -24,7 +24,7 @@ export default class Player {
    * @return function(Dispatch)->User
    */
   public static send(data: any) {
-    return (Dispatch: any) => {
+    return async (Dispatch: any) => {
       Dispatch(Store.Player.send(data));
     };
   }
@@ -35,7 +35,7 @@ export default class Player {
    * @return function(Dispatch)->User
    */
   public static clear() {
-    return (Dispatch: any) => {
+    return async (Dispatch: any) => {
       Dispatch(Store.Player.clear());
     };
   }
