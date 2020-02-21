@@ -19,11 +19,14 @@ class Rules extends React.Component<PropsInterface> {
             <h1 className="title">Правила игры</h1>
             <div className="text">
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Est vel eos quam inventore
-                officiis iusto perferendis totam quo esse asperiores!
+                Для того чтобы собрать пазл, вам нужно правильно расставить фрагменты кода в течение
+                одной минуты
               </p>
-              <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloribus, eligendi!</p>
-              <p> Lorem ipsum dolor sit amet.</p>
+              <p>
+                В случае проигрыша вы можете продолжить с того места на котором остановились, отсчет
+                времени будет восстановлен.
+              </p>
+              <p>За каждую неверную попытку вы теряете 5 секунд.</p>
             </div>
             <div className="btn-box">
               <button
@@ -33,7 +36,7 @@ class Rules extends React.Component<PropsInterface> {
                   this.props.Dispatch(Middleware.Modal.close());
                 }}
               >
-                Close modal
+                ok
               </button>
             </div>
           </div>

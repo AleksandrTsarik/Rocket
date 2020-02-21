@@ -1,51 +1,49 @@
 @font-face {
   font-family: 'Roboto Black';
-  src: url("fonts/Roboto/Roboto-Black.ttf");
+  src: url("../fonts/Roboto/Roboto-Black.ttf");
 }
 
 @font-face {
   font-family: 'Roboto Bold';
-  src: url("fonts/Roboto/Roboto-Bold.ttf");
+  src: url("../fonts/Roboto/Roboto-Bold.ttf");
 }
 
 @font-face {
   font-family: 'Roboto Light';
-  src: url("fonts/Roboto/Roboto-Light.ttf");
+  src: url("../fonts/Roboto/Roboto-Light.ttf");
 }
 
 @font-face {
   font-family: 'Roboto Medium';
-  src: url("fonts/Roboto/Roboto-Medium.ttf");
+  src: url("../fonts/Roboto/Roboto-Medium.ttf");
 }
 
 @font-face {
   font-family: 'Roboto Regular';
-  src: url("fonts/Roboto/Roboto-Regular.ttf");
+  src: url("../fonts/Roboto/Roboto-Regular.ttf");
 }
 
 @font-face {
   font-family: 'Ubuntu Bold';
-  src: url("fonts/Ubuntu/Ubuntu-Bold.ttf");
+  src: url("../fonts/Ubuntu/Ubuntu-Bold.ttf");
 }
 
 @font-face {
   font-family: 'Ubuntu Medium';
-  src: url("fonts/Ubuntu/Ubuntu-Medium.ttf");
+  src: url("../fonts/Ubuntu/Ubuntu-Medium.ttf");
 }
 
 @font-face {
   font-family: 'Ubuntu Regular';
-  src: url("fonts/Ubuntu/Ubuntu-Regular.ttf");
+  src: url("../fonts/Ubuntu/Ubuntu-Regular.ttf");
 }
 
 @font-face {
   font-family: 'Ubuntu Light';
-  src: url("fonts/Ubuntu/Ubuntu-Light.ttf");
+  src: url("../fonts/Ubuntu/Ubuntu-Light.ttf");
 }
 
 .btn {
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
   display: inline-flex;
   text-decoration: none;
   padding: 2em 5em;
@@ -59,12 +57,10 @@
 }
 
 .btn:focus {
-  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .btn:hover {
-  -webkit-transition: 0.3s;
   transition: 0.3s;
 }
 
@@ -246,8 +242,23 @@
 .input-box label {
   padding-left: 0;
   font-family: "Roboto Medium";
-  font-size: 1.1em;
   color: #464A52;
+  font-size: 0.8em;
+  position: absolute;
+  bottom: 1.6em;
+  opacity: 0.7;
+  transition: 0.3s;
+}
+
+.input-box label.upper {
+  bottom: 4em;
+  left: 0.4em;
+  font-size: 0.6em;
+  opacity: 0.4;
+}
+
+.input-box label.label-error {
+  color: #dc3545;
 }
 
 .input-box .input {
@@ -268,19 +279,9 @@
   padding-right: 1em;
 }
 
-.input-box .input::-webkit-input-placeholder {
-  color: #A3ABB1;
-  font-family: "Roboto Light";
-}
-
-.input-box .input:-ms-input-placeholder {
-  color: #A3ABB1;
-  font-family: "Roboto Light";
-}
-
-.input-box .input::-ms-input-placeholder {
-  color: #A3ABB1;
-  font-family: "Roboto Light";
+.input-box .input-error {
+  border-bottom: solid 1px #dc3545;
+  color: #dc3545;
 }
 
 .input-box .input::placeholder {
@@ -306,7 +307,12 @@
 .check {
   cursor: pointer;
   position: relative;
-  padding-left: 2em;
+  display: flex;
+  flex-flow: row nowrap;
+  font-size: 1em;
+  margin-bottom: 1em;
+  color: #464A52;
+  font-family: "Roboto Regular";
 }
 
 .check .check-input {
@@ -316,18 +322,21 @@
   width: 0.1px;
   height: 0.1px;
   overflow: hidden;
-  position: absolute;
   clip: rect 0 0 0 0;
+  display: block;
+  justify-content: space-evenly;
 }
 
 .check .check-box {
-  position: absolute;
+  order: -1;
   width: 1.25em;
   height: 1.25em;
-  border: solid 0.1em white;
-  left: 0;
+  border: solid 0.1em #ffffff;
   border-radius: 0.1em;
-  background: white;
+  margin-right: 0.5em;
+  background: #ffffff;
+  display: block;
+  position: relative;
 }
 
 .check .check-input:checked + .check-box::after {
@@ -337,62 +346,37 @@
   height: 0.8em;
   border-radius: 0.09em;
   position: absolute;
-  left: 50%;
   top: 50%;
+  left: 50%;
   margin-top: -0.4em;
-  margin-left: -0.42em;
+  margin-left: -0.4em;
 }
 
-.check .check-input:focus + .check-box {
-  -webkit-box-shadow: 0 0 0 0.02em #464A52;
-          box-shadow: 0 0 0 0.02em #464A52;
-}
-
-.check .check-input:checked:focus + .check-box {
-  -webkit-box-shadow: 0 0 0 0.1em #464A52;
-          box-shadow: 0 0 0 0.1em #464A52;
+.checkbox-block {
+  margin-top: 1em;
 }
 
 .container {
   color: #ffffff;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-flex: 1;
-      -ms-flex: 1 1 100%;
-          flex: 1 1 100%;
+  justify-content: center;
+  flex: 1 1 100%;
 }
 
 .container .inner {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .container .inner h1 {
   font-size: 5.2em;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
 }
 
 .container .inner .logo-box {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  justify-content: center;
   width: 100%;
 }
 
@@ -403,12 +387,53 @@
   background-position: 50% 50%;
   width: 7em;
   height: 3em;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-ordinal-group: 2;
-      -ms-flex-order: 1;
-          order: 1;
+  order: 1;
+}
+
+.invisibleScreen {
+  width: 100%;
+  z-index: 9000;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+.invisibleScreen #blink {
+  color: #ffffff;
+  border-bottom: none;
+  font-family: "Ubuntu Regular";
+  transition: 0.2s;
+  animation-duration: 1s;
+  animation-delay: 5s;
+  animation-name: blink;
+  animation-iteration-count: infinite;
+  opacity: 0;
+  margin: 20px;
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  text-decoration: none;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0.3;
+  }
 }
 
 .sign-bg {
@@ -418,16 +443,9 @@
 }
 
 .sign-bg .sign-up {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .sign-bg .sign-up .title {
@@ -440,25 +458,15 @@
 }
 
 .sign-bg .sign-up .registration {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
   margin-top: -3em;
 }
 
 .sign-bg .sign-up .registration .checkcox-block {
   margin-top: 1em;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-flow: row wrap;
-          flex-flow: row wrap;
+  flex-flow: row wrap;
   width: 100%;
   color: #464A52;
   font-family: "Roboto Regular";
@@ -474,21 +482,14 @@
 }
 
 .game {
-  background-image: url(img/SM_rocket_grey_horizont.png);
+  background-image: url(../img/SM_rocket_grey_horizont.png);
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 .game .game-box {
@@ -498,22 +499,13 @@
 .game .game-box .container {
   height: auto;
   display: felx;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
 }
 
 .game .game-box .container .wrapper .info {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
   margin: 1.3em 0;
 }
@@ -537,9 +529,7 @@
 
 .game .game-box .container .wrapper .game-field {
   display: felx;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  justify-content: center;
 }
 
 .game .game-box .container .wrapper .game-field .question {
@@ -555,22 +545,16 @@
 }
 
 .game .game-box .container .wrapper .game-field .answer {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   width: 100%;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  justify-content: space-between;
+  flex-wrap: wrap;
   position: relative;
 }
 
 .game .game-box .container .wrapper .game-field .answer button {
   width: 49%;
   margin-bottom: 0.8em;
-  -webkit-transition: 0.3s;
   transition: 0.3s;
   color: #464A52;
 }
@@ -591,7 +575,6 @@
   position: relative;
   width: 2.1em;
   height: 2.1em;
-  -webkit-transition: 0.3s;
   transition: 0.3s;
 }
 
@@ -604,8 +587,7 @@
   position: absolute;
   left: -0.46em;
   top: 1em;
-  -webkit-transform: rotate(45deg);
-          transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 
 .game .game-box .container .wrapper .game-field .answer .cross-box .cross::after {
@@ -617,36 +599,50 @@
   position: absolute;
   left: -0.46em;
   top: 1em;
-  -webkit-transform: rotate(-45deg);
-          transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.modal-background {
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-background .modal {
+  padding: 85px;
+  background: white;
+  width: 70%;
+  margin: auto;
+  position: relative;
 }
 
 * {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-body {
+body, #app {
   background: #464A52;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  justify-content: center;
   margin: 0;
   min-height: 100vh;
   font-size: 24px;
+  width: 100vw;
 }
 
 @media screen and (max-width: 768px) {
-  body {
+  body, #app {
     font-size: 20px;
   }
 }
 
 @media screen and (max-width: 575px) {
-  body {
+  body, #app {
     font-size: 16px;
   }
 }
@@ -668,7 +664,7 @@ body {
 }
 
 .logo {
-  background-image: url(img/icons/semrush-logo-white.svg);
+  background-image: url(../img/icons/semrush-logo-white.svg);
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -676,4 +672,3 @@ body {
   width: 10em;
   margin: 0 auto;
 }
-/*# sourceMappingURL=style.css.map */
