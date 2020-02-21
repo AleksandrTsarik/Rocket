@@ -1,0 +1,51 @@
+.input-box
+    padding: 0.8em 0
+    position: relative
+    width: 100%
+    label
+        padding-left: 0
+        font-family: $font-roboto-medium
+        color: $primary
+        font-size: 0.8em
+        position: absolute
+        bottom: 1.6em
+        opacity: 0.7
+        transition: 0.3s
+    label.upper
+        bottom: 4em
+        left: 0.4em
+        font-size: 0.6em
+        opacity: 0.4
+    label.error
+        color: $danger
+
+    .input
+        width: 100%
+        position: relative
+        padding: 0.1em 0.3em 0.1em
+        line-height: 2.5em
+        font-size: 0.75em
+        color: $primary
+        border: none
+        background: none
+        border-bottom: solid 1px $primary
+        outline: none
+        font-family: $font-roboto-medium
+        white-space: nowrap
+        overflow: hidden
+        text-overflow: ellipsis
+        padding-right: 1em
+        &-error
+            border-bottom: solid 1px $danger
+            color: $danger
+        &::placeholder
+            color: #A3ABB1
+            font-family: $font-roboto-light
+        ::-ms-clear
+            display: none //todo удаление иконки очистки поля в IE
+        ::-ms-reveal
+            display: none //todo удаление иконки отображения пароля в IE
+        &-center
+            @media screen and ( max-width: 575px )
+                text-align: center
+                padding: 0.1em 0em

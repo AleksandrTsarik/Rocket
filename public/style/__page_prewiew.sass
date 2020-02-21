@@ -1,0 +1,63 @@
+.container
+    color: $white
+    display: flex
+    justify-content: center
+    flex: 1 1 100%
+    .inner
+        display: flex
+        flex-direction: column
+        justify-content: space-evenly
+
+        h1
+            font-size: 5.2em
+            display: flex
+        .logo-box
+            display: flex
+            justify-content: center
+            width: 100%
+            .logo
+                background-image: url(../img/icons/semrush-logo-alt-white.svg)
+                background-size: 100%
+                background-repeat: no-repeat
+                background-position: 50% 50%
+                width: 7em
+                height: 3em
+                display: flex
+                order: 1
+
+.invisibleScreen
+    width: 100%
+    z-index: 9000
+    height: 100vh
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    position: absolute
+    display: flex
+    align-items: flex-end
+    justify-content: flex-end
+    cursor: pointer
+    #blink
+        color: $white
+        border-bottom: none
+        font-family: $font-ubuntu-regular
+        transition: 0.2s
+        animation-duration: 1s
+        animation-delay: 5s;
+        animation-name: blink
+        animation-iteration-count: infinite
+        opacity: 0
+        margin: 20px
+        top: 50%;
+        left: 50%;
+        position: fixed;
+        text-decoration: none
+        transform: translate(-50%, -50%);
+    @keyframes blink
+        0%
+            opacity: 0.3
+        50%
+            opacity: 0.7
+        100%
+            opacity: 0.3

@@ -1,0 +1,100 @@
+
+.game
+    background-image: url(../img/SM_rocket_grey_horizont.png)
+    background-position: 50% 50%
+    background-repeat: no-repeat
+    background-size: cover
+    width: 100%
+    display: flex
+    flex-direction: column
+    justify-content: flex-end
+    .game-box
+        background: $primary
+        .container
+            height: auto
+            display: felx
+            flex-direction: column
+            .wrapper
+                .info
+                    display: flex
+                    align-items: center
+                    justify-content: space-between
+                    width: 100%
+                    margin: 1.3em 0
+                    .distance
+                        background: $success
+                        border: solid 5px $success
+                        font-family: $font-roboto-regular
+                        color: $white
+                        border-radius: 5px
+                        padding: 0.1em 0.2em
+                    .time
+                        color: $white
+                        font-family: $font-roboto-regular
+                        border: solid 5px $orange
+                        padding: 0.1em 0.4em
+                        border-radius: 5px 
+                .game-field
+                    display: felx
+                    justify-content: center
+                    .question
+                        border: solid 1px $white
+                        background: $white
+                        text-align: center
+                        color: $primary
+                        font-size: 1.5em
+                        padding: 0.7em 0 
+                        border-radius: 0.25em
+                        font-family: $font-ubuntu-regular
+                        margin-bottom: 0.8em
+                    .answer
+                        display: flex
+                        width: 100%
+                        justify-content: space-between
+                        flex-wrap: wrap
+                        position: relative
+                        button
+                            width: 49%
+                            margin-bottom: 0.8em
+                            transition: 0.3s
+                            color: $primary
+                            &:hover
+                                background: $orange
+                                color: $white
+                                opacity: 1
+                        .cross-box
+                            position: absolute
+                            bottom: 0.8em
+                            left: -3.9em
+                            .cross
+                                position: relative
+                                width: 2.1em
+                                height: 2.1em
+                                transition: 0.3s
+                                &::before
+                                    content: ''
+                                    width: 3em
+                                    height: 0.2em
+                                    background: #7F878A
+                                    border-radius: 0.1em
+                                    position: absolute
+                                    left: -0.46em
+                                    top: 1em
+                                    transform: rotate(45deg)
+    
+                                &::after
+                                    content: ''
+                                    width: 3em
+                                    height: 0.2em
+                                    background: #7F878A
+                                    border-radius: 0.1em
+                                    position: absolute
+                                    left: -0.46em
+                                    top: 1em
+                                    transform: rotate(-45deg)
+
+
+
+
+
+

@@ -22,6 +22,10 @@ export default withRouter(
         switch (Component.modal) {
           case "Default":
             return <Modals.Default {...Component.data} />;
+          case "Rules":
+            return <Modals.Rules {...Component.data} />;
+          case "Win":
+            return <Modals.Win {...Component.data} />;
           default:
             return <></>;
         }
