@@ -1,7 +1,9 @@
 .check {
   cursor: pointer;
   position: relative;
-  padding-left: 1.2em;
+  display: flex;
+  flex-flow: row nowrap;
+  font-size: 1em;
 }
 
 .check .check-input {
@@ -11,19 +13,22 @@
   width: 0.1px;
   height: 0.1px;
   overflow: hidden;
-  position: absolute;
   clip: rect 0 0 0 0;
+  display: block;
+  justify-content: space-evenly;
 }
 
 .check .check-box {
-  position: absolute;
+  order: -1;
   width: 0.8em;
   height: 0.8em;
-  box-shadow: 0 0 0 0.1em;
+  box-shadow: 0 0 0 0.1em blue;
   left: 0;
   margin-top: 0.3em;
   border-radius: 0.05em;
   background: white;
+  display: block;
+  position: relative;
 }
 
 .check .check-input:checked + .check-box::after {
@@ -33,59 +38,16 @@
   height: 0.4em;
   border-radius: 0.1em;
   position: absolute;
-  left: 50%;
   top: 50%;
+  left: 50%;
   margin-top: -0.2em;
   margin-left: -0.2em;
 }
 
 .check .check-input:focus + .check-box {
-  box-shadow: 0 0 0.05em 0.1em;
+  box-shadow: 0 0 0.05em 0.1em blue;
 }
 
 .check .check-input:checked:disabled + .check-box {
-  box-shadow: 0 0 0 0.1em gray;
-}
-
-.check .check-radio {
-  width: 0.1px;
-  height: 0.1px;
-  overflow: hidden;
-  position: absolute;
-  clip: rect 0 0 0 0;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-
-.check .check-box-radio {
-  position: absolute;
-  width: 0.8em;
-  height: 0.8em;
-  box-shadow: 0 0 0 0.1em blue;
-  border-radius: 2em;
-  margin-top: 0.4em;
-  background: white;
-  left: 0;
-}
-
-.check .check-radio:checked + .check-box-radio::after {
-  content: '';
-  background: red;
-  width: 0.4em;
-  height: 0.4em;
-  border-radius: 2em;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-top: -0.2em;
-  margin-left: -0.2em;
-}
-
-.check .check-radio:focus + .check-box-radio {
-  box-shadow: 0 0 0.1em 0.1em blue;
-}
-
-.check .check-radio:checked:disabled + .check-box-radio {
   box-shadow: 0 0 0 0.1em gray;
 }

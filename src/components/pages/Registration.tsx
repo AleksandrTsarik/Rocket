@@ -128,7 +128,26 @@ class Registration extends React.Component<PropsInterface, StateInterface> {
   checkbox(props: { name: string; value: any; label: string; id: string; required: boolean }) {
     return (
       <>
-        <div className="check-box">
+        <div>
+          <label className="check">
+            <input
+              type="checkbox"
+              name={props.name}
+              checked={props.value}
+              className="check-input"
+            />
+            {props.label}
+            <span className="check-box" />
+          </label>
+        </div>
+        {/* <div>
+          <label className="check">
+            <input type="checkbox" className="check-input" />
+            second
+            <span className="check-box" />
+          </label>
+        </div> */}
+        {/* <div className="check-box">
           <input
             type="checkbox"
             name={props.name}
@@ -144,7 +163,7 @@ class Registration extends React.Component<PropsInterface, StateInterface> {
           >
             {props.label}
           </label>
-        </div>
+        </div> */}
       </>
     );
   }
