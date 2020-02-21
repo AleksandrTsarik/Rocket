@@ -1,4 +1,3 @@
-
 .check
     cursor: pointer
     position: relative
@@ -29,6 +28,8 @@
         background: $white
         display: block
         position: relative
+        &-error
+            border: solid 0.1em $danger
     .check-input:checked + .check-box::after
         content: ''
         background: $primary

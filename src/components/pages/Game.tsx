@@ -100,7 +100,9 @@ class Game extends React.Component<PropsInterface, StateInterface> {
                 <div className="info">
                   <div className="distance">{this.state.speed} км</div>
                   <div className="logo" />
-                  <div className="time">{this.state.minutes} : {this.state.seconds}</div>
+                  <div className="time">
+                    {this.state.minutes} : {this.state.seconds}
+                  </div>
                 </div>
                 <div className="game-field">
                   <div className="question">Автор “Сказки о попе и его работнике Балде”?</div>
