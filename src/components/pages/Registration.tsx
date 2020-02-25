@@ -23,11 +23,11 @@ class Registration extends React.Component<PropsInterface, StateInterface> {
   constructor(Props: PropsInterface) {
     super(Props);
     this.state = {
-      firstName: "",
-      lastName: "",
-      email: "",
-      personalData: false,
-      city: false,
+      firstName: "asd@asd.asda",
+      lastName: "asd@asd.asda",
+      email: "asd@asd.asda",
+      personalData: true,
+      city: true,
       errors: false,
     };
 

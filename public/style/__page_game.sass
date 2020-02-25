@@ -1,15 +1,24 @@
 
+
 .game
-    background-image: url(../img/SM_rocket_grey_horizont.png)
-    background-position: 50% 50%
-    background-repeat: no-repeat
-    background-size: cover
     width: 100%
     display: flex
     flex-direction: column
     justify-content: flex-end
+    position: relative
+    overflow: hidden
+    .game-background
+        width: 100vw
+        height: 100%
+        top: 0
+        left: 0
+        background-size: cover
+        background-repeat-y: no-repeat
+        background-repeat-x: repeat
+        background-image: url(../img/background_rocket.jpg)
     .game-box
         background: $primary
+        position: relative
         .container
             height: auto
             display: felx

@@ -29,3 +29,11 @@ export const questions = [
   },
 ];
 export const letters = ["A", "B", "C", "D"];
+export const config = {
+  time: 90,
+};
+export const bestResult = {
+  distance: 3000,
+  anwers: 9,
+  total: 10,
+};

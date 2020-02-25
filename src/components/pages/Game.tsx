@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import * as Middleware from "../../middlewares";
-import { questions, letters } from "../../utils/answers";
+import { questions, letters } from "../../utils/configs";
 
 interface PropsInterface {
   location: any;
@@ -19,10 +19,12 @@ interface StateInterface {
   speed: number;
   questions: any;
   runGame: boolean;
+  backgroundPosition: number;
 }
 
 class Game extends React.Component<PropsInterface, StateInterface> {
-  timerObj: NodeJS.Timeout | any;
+  timerGame: NodeJS.Timeout | any;
+  timerBackground: NodeJS.Timeout | any;
   constructor(Props: PropsInterface) {
     super(Props);
     this.state = {
@@ -33,6 +35,7 @@ class Game extends React.Component<PropsInterface, StateInterface> {
       speed: 1500,
       questions: [],
       runGame: false,
+      backgroundPosition: 0,
     };
     this.timeToString = this.timeToString.bind(this);
   }
@@ -49,7 +52,10 @@ class Game extends React.Component<PropsInterface, StateInterface> {
       prevProps !== this.props &&
       this.state.runGame === false
     ) {
-      this.setState({ runGame: true }, () => this.clock());
+      this.setState({ runGame: true }, () => {
+        this.clock();
+        this.clockBackground();
+      });
     }
     if (
       this.props.Store.Game.status === "stop" &&
@@ -67,7 +73,8 @@ class Game extends React.Component<PropsInterface, StateInterface> {
       seconds: "00",
     });
 
-    clearTimeout(this.timerObj);
+    clearTimeout(this.timerGame);
+    clearTimeout(this.timerBackground);
   }
 
   // Reverse string time from number
@@ -123,14 +130,24 @@ class Game extends React.Component<PropsInterface, StateInterface> {
     // game in playing
     if (this.state.timer > 0) {
       this.setTimer();
-      this.timerObj = setTimeout(() => this.clock(), 1000); // timeout дабы избежать лагов при работе с таймером
+      this.timerGame = setTimeout(() => this.clock(), 1000); // timeout дабы избежать лагов при работе с таймером
     } else {
       this.props.Dispatch(Middleware.Modal.open("Win"));
     }
   }
 
+  clockBackground(bonus = 1) {
+    if (this.state.timer > 0) {
+      this.setState({
+        backgroundPosition: this.state.backgroundPosition - bonus,
+      });
+      this.timerBackground = setTimeout(() => this.clockBackground(), 10); // timeout дабы избежать лагов при работе с таймером
+    }
+  }
+
   exit() {
-    clearTimeout(this.timerObj);
+    clearTimeout(this.timerGame);
+    clearTimeout(this.timerBackground);
     this.props.history.push("/");
     this.componentWillUnmount();
   }
@@ -139,6 +156,10 @@ class Game extends React.Component<PropsInterface, StateInterface> {
     return (
       <>
         <div className="game">
+          <div
+            className="game-background"
+            style={{ backgroundPositionX: this.state.backgroundPosition }}
+          />
           <div className="game-box">
             <div className="container">
               <div className="wrapper">
