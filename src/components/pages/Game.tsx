@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import * as Middleware from "../../middlewares";
-import { questions, letters } from "../../utils/configs";
+import { questions, letters, config } from "../../utils/configs";
 
 interface PropsInterface {
   location: any;
@@ -20,6 +20,8 @@ interface StateInterface {
   questions: any;
   runGame: boolean;
   backgroundPosition: number;
+  rocketPosition: number;
+  smokePosition: number;
 }
 
 class Game extends React.Component<PropsInterface, StateInterface> {
@@ -28,7 +30,7 @@ class Game extends React.Component<PropsInterface, StateInterface> {
   constructor(Props: PropsInterface) {
     super(Props);
     this.state = {
-      timer: 90,
+      timer: config.time,
       step: 0,
       minutes: "00",
       seconds: "00",
@@ -36,6 +38,8 @@ class Game extends React.Component<PropsInterface, StateInterface> {
       questions: [],
       runGame: false,
       backgroundPosition: 0,
+      rocketPosition: 0,
+      smokePosition: 0,
     };
     this.timeToString = this.timeToString.bind(this);
   }
@@ -140,6 +144,7 @@ class Game extends React.Component<PropsInterface, StateInterface> {
     if (this.state.timer > 0) {
       this.setState({
         backgroundPosition: this.state.backgroundPosition - bonus,
+        smokePosition: this.state.smokePosition - bonus - 1,
       });
       this.timerBackground = setTimeout(() => this.clockBackground(), 10); // timeout дабы избежать лагов при работе с таймером
     }
@@ -159,7 +164,11 @@ class Game extends React.Component<PropsInterface, StateInterface> {
           <div
             className="game-background"
             style={{ backgroundPositionX: this.state.backgroundPosition }}
-          />
+          >
+            <div className="rocket">
+              <div className="smoke" style={{ backgroundPositionX: this.state.smokePosition }} />
+            </div>
+          </div>
           <div className="game-box">
             <div className="container">
               <div className="wrapper">
