@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import * as Middleware from "../../middlewares";
 import { questions, letters, config } from "../../utils/configs";
 
@@ -14,9 +14,10 @@ interface PropsInterface {
 interface StateInterface {
   timer: number;
   step: number;
+  right: number;
   minutes: string;
   seconds: string;
-  speed: number;
+  distance: number;
   questions: any;
   runGame: boolean;
   backgroundPosition: number;
@@ -30,11 +31,12 @@ class Game extends React.Component<PropsInterface, StateInterface> {
   constructor(Props: PropsInterface) {
     super(Props);
     this.state = {
-      timer: config.time,
+      timer: 0,
       step: 0,
+      right: 0,
       minutes: "00",
       seconds: "00",
-      speed: 1500,
+      distance: 1500,
       questions: [],
       runGame: false,
       backgroundPosition: 0,
@@ -47,7 +49,6 @@ class Game extends React.Component<PropsInterface, StateInterface> {
   public componentDidMount() {
     document.title = process.env.SITE_NAME + " | Game!";
     this.props.Dispatch(Middleware.Modal.open("Rules"));
-    this.props.Dispatch(Middleware.Game.create(this.props.Store.Player.id));
   }
 
   componentDidUpdate(prevProps: any) {
@@ -56,10 +57,17 @@ class Game extends React.Component<PropsInterface, StateInterface> {
       prevProps !== this.props &&
       this.state.runGame === false
     ) {
-      this.setState({ runGame: true }, () => {
-        this.clock();
-        this.clockBackground();
-      });
+      this.setState(
+        {
+          runGame: true,
+          questions: this.props.Store.Game.questions,
+          timer: this.props.Store.Game.time,
+        },
+        () => {
+          this.clock();
+          this.clockBackground();
+        }
+      );
     }
     if (
       this.props.Store.Game.status === "stop" &&
@@ -109,21 +117,38 @@ class Game extends React.Component<PropsInterface, StateInterface> {
     });
   }
 
-  checkAnswer(answer: number) {
-    return true;
-  }
-
   gameStep(answer: number) {
-    if (this.state.step >= questions.length - 1) {
+    if (this.state.timer > 0) {
+      if (this.state.questions[this.state.step].right === answer) {
+        this.setState({
+          distance: this.state.distance + this.props.Store.Game.questions[answer].distance,
+          right: this.state.right + 1,
+        });
+      } else {
+        this.setTimer(this.props.Store.Game.fall);
+      }
+      this.setState({
+        step: this.state.step + 1,
+      });
+    } else {
+      this.props.Dispatch(
+        Middleware.Player.result({
+          right: this.state.right,
+          time: this.state.timer,
+        })
+      );
       this.props.Dispatch(Middleware.Modal.open("Win"));
     }
-    if (this.state.timer > 0) {
-      if (this.checkAnswer(answer)) {
-        this.setState({
-          step: this.state.step + 1,
-        });
-      }
-    } else {
+
+    if (this.state.step >= this.state.questions.length - 1) {
+      this.props.Dispatch(
+        Middleware.Player.result({
+          player_id: this.props.Store.Player.id,
+          distance: this.state.distance,
+          right: this.state.right,
+          time: this.state.timer,
+        })
+      );
       this.props.Dispatch(Middleware.Modal.open("Win"));
     }
   }
@@ -158,58 +183,70 @@ class Game extends React.Component<PropsInterface, StateInterface> {
   }
 
   public render() {
-    return (
-      <>
-        <div className="game">
-          <div
-            className="game-background"
-            style={{ backgroundPositionX: this.state.backgroundPosition }}
-          >
-            <div className="rocket">
-              <div className="smoke" style={{ backgroundPositionX: this.state.smokePosition }} />
+    if (this.state.questions !== null) {
+      return (
+        <>
+          <div className="game">
+            <div
+              className="game-background"
+              style={{ backgroundPositionX: this.state.backgroundPosition }}
+            >
+              <div className="rocket">
+                <div className="smoke" style={{ backgroundPositionX: this.state.smokePosition }} />
+              </div>
             </div>
-          </div>
-          <div className="game-box">
-            <div className="container">
-              <div className="wrapper">
-                <div className="info">
-                  <div className="distance">{this.state.speed} км</div>
-                  <div className="logo" />
-                  <div className="time">
-                    {this.state.minutes} : {this.state.seconds}
+            <div className="game-box">
+              <div className="container">
+                <div className="wrapper">
+                  <div className="info">
+                    <div className="distance">{this.state.distance} км</div>
+                    <div className="logo" />
+                    <div className="time">
+                      {this.state.minutes} : {this.state.seconds}
+                    </div>
                   </div>
-                </div>
-                <div className="game-field">
-                  {questions[this.state.step] !== undefined ? (
-                    <>
-                      <div className="question">{questions[this.state.step].question}</div>
-                      <div className="answer">
-                        <a href="#" className="cross-box" onClick={() => this.exit()}>
-                          <div className="cross" />
-                        </a>
-                        {questions[this.state.step].answers.map((answer: string, index: number) => {
-                          return (
-                            <button
-                              key={index}
-                              onClick={() => this.gameStep(index)}
-                              className="btn btn-default btn-block btn-md"
-                            >
-                              <b>{letters[index]}:</b> {answer}
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </>
-                  ) : (
-                    <></>
-                  )}
+                  <div className="game-field">
+                    {this.state.questions[this.state.step] !== undefined ? (
+                      <>
+                        <div className="question">
+                          {this.state.questions[this.state.step].question}
+                        </div>
+                        <div className="answer">
+                          <a href="#" className="cross-box" onClick={() => this.exit()}>
+                            <div className="cross" />
+                          </a>
+                          {questions[this.state.step].answers.map(
+                            (answer: string, index: number) => {
+                              return (
+                                <button
+                                  key={index}
+                                  onClick={() => this.gameStep(index)}
+                                  className="btn btn-default btn-block btn-md"
+                                >
+                                  <b>{letters[index]}:</b> {answer}
+                                </button>
+                              );
+                            }
+                          )}
+                        </div>
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+        </>
+      );
+    } else {
+      return (
+        <div className="preload">
+          <p>preload...</p>
         </div>
-      </>
-    );
+      );
+    }
   }
 }
 

@@ -7,6 +7,16 @@ export default function Game(state = [], action: any) {
         ...state,
         status: action.data,
       };
+    case Action.Store.Game.START:
+      return {
+        ...state,
+        questions: action.data.questions,
+        time: action.data.time,
+        game_id: action.data.game_id,
+        bestResult: action.data.bestResult,
+      }
+    case Action.Store.Game.CLEAR:
+      return []
     default:
       return state;
   }

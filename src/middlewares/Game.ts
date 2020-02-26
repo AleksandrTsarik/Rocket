@@ -1,6 +1,6 @@
 import * as Models from "../models";
 import * as Store from "../actions/Store";
-import * as Middleware from "../middlewares";
+import { questions, config, bestResult } from "../utils/configs";
 
 export default class Game {
   /**
@@ -8,14 +8,26 @@ export default class Game {
    *
    * @return function(Dispatch)->Game
    */
-  public static create(data: any) {
+  public static start(data: any) {
     return async (dispatch: any) => {
-      new Models.Game()
-        .create(data)
-        .then((data: any[]) => {
-          dispatch(Store.Game.create(data.data));
+      dispatch(
+        Store.Game.start({
+          questions,
+          time: config.time,
+          game_id: 11,
+          fall: config.fall,
+          bestResult,
         })
-        .catch((Exception) => {});
+      );
+      dispatch(Store.Game.status("start"));
+      // TODO: когда будет бек
+      // new Models.Game()
+      //   .start(data)
+      //   .then((data: any[]) => {
+      //     dispatch(Store.Game.status("start"));
+      //     dispatch(Store.Game.start(data.data));
+      //   })
+      //   .catch((Exception) => {});
     };
   }
 
@@ -35,14 +47,9 @@ export default class Game {
     };
   }
 
-  /**
-   * Установка игрового таймера
-   *
-   * @return function(Dispatch)->Game
-   */
-  public static setTimes(data: any) {
-    return (Dispatch: any) => {
-      Dispatch(Store.Game.setTimes(data));
+  public static clear() {
+    return async (dispatch: any) => {
+      dispatch(Store.Game.clear());
     };
   }
 }

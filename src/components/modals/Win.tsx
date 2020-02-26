@@ -20,19 +20,26 @@ class Win extends React.Component<PropsInterface> {
             <div className="result">
               <div>Your Result:</div>
               <div className="distance">
-                Distance <span>1500 pc</span>
+                Distance <span>{this.props.Store.Player.distance} pc</span>
               </div>
               <div className="questions">
-                Correct questions: <span>5 (10)</span>
+                Correct questions:{" "}
+                <span>
+                  {this.props.Store.Player.right} ({this.props.Store.Game.questions.length})
+                </span>
               </div>
             </div>
             <div className="best-result">
               <div>Best Result:</div>
               <div className="distance">
-                Distance <span>3000 pc</span>
+                Distance <span>{this.props.Store.Game.bestResult.distance} pc</span>
               </div>
               <div className="questions">
-                Correct questions: <span>9 (10)</span>
+                Correct questions:{" "}
+                <span>
+                  {this.props.Store.Game.bestResult.anwers} (
+                  {this.props.Store.Game.bestResult.total})
+                </span>
               </div>
             </div>
             {/* <div className="console">
@@ -47,13 +54,7 @@ class Win extends React.Component<PropsInterface> {
                 onClick={() => {
                   this.props.Dispatch(Middleware.Modal.closeAll());
                   this.props.Dispatch(Middleware.Player.clear());
-                  this.props.Dispatch(
-                    Middleware.Game.finish({
-                      player_id: this.props.Store.Player.id,
-                      misstakes: 8,
-                      time: 88,
-                    })
-                  );
+                  this.props.Dispatch(Middleware.Game.finish(this.props.Store.Player));
                   this.props.history.push("/");
                 }}
               >

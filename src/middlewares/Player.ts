@@ -18,6 +18,12 @@ export default class Player {
     };
   }
 
+  public static result(data: any) {
+    return (dispatch: any) => {
+      dispatch(Store.Player.result(data));
+    }
+  }
+
   /**
    * Отправить юзера на бек
    *

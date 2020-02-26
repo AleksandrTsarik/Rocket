@@ -158,7 +158,7 @@ class Registration extends React.Component<PropsInterface, StateInterface> {
           <div className="container">
             <div className="sign-up">
               <h1 className="title">Sign up</h1>
-              <form className="registration" autocomplete="off">
+              <form className="registration" autoComplete="off">
                 <this.input
                   label="FIRST NAME *"
                   name="firstName"

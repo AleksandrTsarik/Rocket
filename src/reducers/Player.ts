@@ -9,6 +9,13 @@ export default function Player(state = [], action: any) {
       };
     case Action.Store.Player.CLEAR:
       return [];
+    case Action.Store.Player.RESULT:
+      return {
+        ...state,
+        time: action.data.time,
+        right: action.data.right,
+        distance: action.data.distance,
+      };
     default:
       return state;
   }
