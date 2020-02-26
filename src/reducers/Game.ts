@@ -14,9 +14,9 @@ export default function Game(state = [], action: any) {
         time: action.data.time,
         game_id: action.data.game_id,
         bestResult: action.data.bestResult,
-      }
+      };
     case Action.Store.Game.CLEAR:
-      return []
+      return [];
     default:
       return state;
   }

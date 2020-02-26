@@ -16,7 +16,7 @@ export default class Player extends ModelPrototype {
         .setMethod(Method.POST)
         .request(data);
     } catch (Exception) {
-      console.log("baaad")
+      console.log("baaad");
       throw Exception;
     }
   }

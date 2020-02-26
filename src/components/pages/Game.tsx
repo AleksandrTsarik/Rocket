@@ -157,7 +157,7 @@ class Game extends React.Component<PropsInterface, StateInterface> {
   clock() {
     this.timeToString();
     // game in playing
-    if (this.state.timer > 0) {
+    if (this.state.timer > 0 && this.props.Store.Modal.length === 0) {
       this.setTimer();
       this.timerGame = setTimeout(() => this.clock(), 1000); // timeout дабы избежать лагов при работе с таймером
     } else {
@@ -166,7 +166,7 @@ class Game extends React.Component<PropsInterface, StateInterface> {
   }
 
   clockBackground(bonus = 1) {
-    if (this.state.timer > 0) {
+    if (this.state.timer > 0 && this.props.Store.Modal.length === 0) {
       this.setState({
         backgroundPosition: this.state.backgroundPosition - bonus,
         smokePosition: this.state.smokePosition - bonus - 1,
