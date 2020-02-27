@@ -206,8 +206,10 @@ class Game extends React.Component<PropsInterface, StateInterface> {
     this.timeToString();
     // game in playing
     if (this.state.timer > 0 && this.props.Store.Modal.length === 0) {
-      this.setTimer();
-        this.timerGame = setTimeout(() => this.clock(), 1000); // timeout дабы избежать лагов при работе с таймером
+      if (!this.state.blockIntarface) {
+        this.setTimer();
+      }
+      this.timerGame = setTimeout(() => this.clock(), 1000); // timeout дабы избежать лагов при работе с таймером
     } else {
       this.props.Dispatch(Middleware.Modal.open("Win"));
     }
