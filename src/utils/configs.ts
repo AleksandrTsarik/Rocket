@@ -27,6 +27,20 @@ export const questions = [
     right: 3,
     distance: 400,
   },
+  {
+    id: 5,
+    question: "how5",
+    answers: ["lala", "lolo", "keke", "nooo!"],
+    right: 0,
+    distance: 400,
+  },
+  {
+    id: 6,
+    question: "how6",
+    answers: ["lala", "lolo", "keke", "nooo!"],
+    right: 1,
+    distance: 400,
+  },
 ];
 export const letters = ["A", "B", "C", "D"];
 export const config = {

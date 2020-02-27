@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { withRouter, Redirect } from "react-router-dom";
 import * as Middleware from "../../middlewares";
 import { questions, letters, config } from "../../utils/configs";
+import "csshake";
 
 interface PropsInterface {
   location: any;
@@ -21,8 +22,13 @@ interface StateInterface {
   questions: any;
   runGame: boolean;
   backgroundPosition: number;
+  backgroundSpeedBonus: number;
   rocketPosition: number;
   smokePosition: number;
+  smokeSpeedBonus: number;
+  smokeVision: boolean;
+  animationRocket: string;
+  blockIntarface: boolean;
 }
 
 class Game extends React.Component<PropsInterface, StateInterface> {
@@ -40,10 +46,16 @@ class Game extends React.Component<PropsInterface, StateInterface> {
       questions: [],
       runGame: false,
       backgroundPosition: 0,
+      backgroundSpeedBonus: 1,
       rocketPosition: 0,
       smokePosition: 0,
+      smokeSpeedBonus: 1,
+      smokeVision: true,
+      animationRocket: "",
+      blockIntarface: false,
     };
     this.timeToString = this.timeToString.bind(this);
+    this.setRocketAnimation = this.setRocketAnimation.bind(this);
   }
 
   public componentDidMount() {
@@ -117,14 +129,50 @@ class Game extends React.Component<PropsInterface, StateInterface> {
     });
   }
 
+  setRocketAnimation(wha: boolean) {
+    let timing = 0;
+    this.setState({
+      blockIntarface: true,
+    });
+    if (wha) {
+      this.setState({
+        animationRocket: "rocket-speed",
+        backgroundSpeedBonus: this.state.backgroundSpeedBonus + 1,
+        smokeSpeedBonus: this.state.smokeSpeedBonus + 1,
+      });
+      timing = 4000;
+    } else {
+      this.setState({
+        smokeVision: false,
+        animationRocket: "shake-slow shake-constant",
+      });
+      timing = 2000;
+    }
+
+    setTimeout(() => {
+      this.setState({
+        smokeVision: true,
+        animationRocket: "",
+      });
+    }, timing);
+
+    setTimeout(() => {
+      this.setState({
+        blockIntarface: false,
+      });
+    }, 1500);
+  }
+
   gameStep(answer: number) {
     if (this.state.timer > 0) {
       if (this.state.questions[this.state.step].right === answer) {
+        this.setRocketAnimation(true);
         this.setState({
           distance: this.state.distance + this.props.Store.Game.questions[answer].distance,
           right: this.state.right + 1,
         });
       } else {
+        this.setRocketAnimation(false);
         this.setTimer(this.props.Store.Game.fall);
       }
       this.setState({
@@ -159,17 +207,17 @@ class Game extends React.Component<PropsInterface, StateInterface> {
     // game in playing
     if (this.state.timer > 0 && this.props.Store.Modal.length === 0) {
       this.setTimer();
-      this.timerGame = setTimeout(() => this.clock(), 1000); // timeout дабы избежать лагов при работе с таймером
+        this.timerGame = setTimeout(() => this.clock(), 1000); // timeout дабы избежать лагов при работе с таймером
     } else {
       this.props.Dispatch(Middleware.Modal.open("Win"));
     }
   }
 
-  clockBackground(bonus = 1) {
+  clockBackground() {
     if (this.state.timer > 0 && this.props.Store.Modal.length === 0) {
       this.setState({
-        backgroundPosition: this.state.backgroundPosition - bonus,
-        smokePosition: this.state.smokePosition - bonus - 1,
+        backgroundPosition: this.state.backgroundPosition - this.state.backgroundSpeedBonus,
+        smokePosition: this.state.smokePosition - this.state.smokeSpeedBonus,
       });
       this.timerBackground = setTimeout(() => this.clockBackground(), 10); // timeout дабы избежать лагов при работе с таймером
     }
@@ -191,8 +239,14 @@ class Game extends React.Component<PropsInterface, StateInterface> {
               className="game-background"
               style={{ backgroundPositionX: this.state.backgroundPosition }}
             >
-              <div className="rocket">
-                <div className="smoke" style={{ backgroundPositionX: this.state.smokePosition }} />
+              <div className={"rocket " + this.state.animationRocket}>
+                <div
+                  className="smoke"
+                  style={{
+                    backgroundPositionX: this.state.smokePosition,
+                    display: this.state.smokeVision ? "block" : "none",
+                  }}
+                />
               </div>
             </div>
             <div className="game-box">
@@ -208,7 +262,11 @@ class Game extends React.Component<PropsInterface, StateInterface> {
                   <div className="game-field">
                     {this.state.questions[this.state.step] !== undefined ? (
                       <>
-                        <div className="question">
+                        <div
+                          className={
+                            "question " + (this.state.blockIntarface ? "block-question" : "")
+                          }
+                        >
                           {this.state.questions[this.state.step].question}
                         </div>
                         <div className="answer">
@@ -221,7 +279,11 @@ class Game extends React.Component<PropsInterface, StateInterface> {
                                 <button
                                   key={index}
                                   onClick={() => this.gameStep(index)}
-                                  className="btn btn-default btn-block btn-md"
+                                  disabled={this.state.blockIntarface}
+                                  className={
+                                    "btn btn-default btn-block btn-md " +
+                                    (this.state.blockIntarface ? "block-answer" : "")
+                                  }
                                 >
                                   <b>{letters[index]}:</b> {answer}
                                 </button>

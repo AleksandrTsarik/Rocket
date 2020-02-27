@@ -20,9 +20,9 @@
         .rocket
             background-image: url(../img/rocket.svg)
             top: 50%
-            left: 50%
-            transform: translate(-50%, -50%)
-            width: 30%
+            left: 42%
+            // transform: translate(-50%, -50%)
+            width: 20%
             height: 17%
             background-repeat: no-repeat
             position: absolute
@@ -38,6 +38,17 @@
             background-repeat-y: no-repeat
             position: absolute;
             z-index: 2
+        .rocket-speed
+            animation-duration: 4s
+            animation-name: rocketSpeed
+            animation-timing-function: ease-in
+            @keyframes rocketSpeed
+                0%
+                    left: 42%
+                50%
+                    left: 52%
+                100%
+                    left: 42%
     .game-box
         background: $primary
         position: relative
@@ -80,6 +91,8 @@
                         border-radius: 0.25em
                         font-family: $font-ubuntu-regular
                         margin-bottom: 0.8em
+                    .block-question
+                        opacity: 0.1
                     .answer
                         display: flex
                         width: 100%
@@ -95,6 +108,13 @@
                                 background: $orange
                                 color: $white
                                 opacity: 1
+                        .block-answer
+                            opacity: 0.1
+                            cursor: not-allowed
+                            &:hover
+                                color: $primary
+                                background: #c9c9c9
+                                opacity: 0.1
                         .cross-box
                             position: absolute
                             bottom: 0.8em
