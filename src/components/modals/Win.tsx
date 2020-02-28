@@ -25,7 +25,8 @@ class Win extends React.Component<PropsInterface> {
               <div className="questions">
                 Correct questions:{" "}
                 <span>
-                  {this.props.Store.Player.correct_answers} ({this.props.Store.Game.questions.length})
+                  {this.props.Store.Player.correct_answers} (
+                  {this.props.Store.Game.questions.length})
                 </span>
               </div>
             </div>
