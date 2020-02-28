@@ -1,0 +1,674 @@
+@font-face {
+  font-family: 'Roboto Black';
+  src: url("../fonts/Roboto/Roboto-Black.ttf");
+}
+
+@font-face {
+  font-family: 'Roboto Bold';
+  src: url("../fonts/Roboto/Roboto-Bold.ttf");
+}
+
+@font-face {
+  font-family: 'Roboto Light';
+  src: url("../fonts/Roboto/Roboto-Light.ttf");
+}
+
+@font-face {
+  font-family: 'Roboto Medium';
+  src: url("../fonts/Roboto/Roboto-Medium.ttf");
+}
+
+@font-face {
+  font-family: 'Roboto Regular';
+  src: url("../fonts/Roboto/Roboto-Regular.ttf");
+}
+
+@font-face {
+  font-family: 'Ubuntu Bold';
+  src: url("../fonts/Ubuntu/Ubuntu-Bold.ttf");
+}
+
+@font-face {
+  font-family: 'Ubuntu Medium';
+  src: url("../fonts/Ubuntu/Ubuntu-Medium.ttf");
+}
+
+@font-face {
+  font-family: 'Ubuntu Regular';
+  src: url("../fonts/Ubuntu/Ubuntu-Regular.ttf");
+}
+
+@font-face {
+  font-family: 'Ubuntu Light';
+  src: url("../fonts/Ubuntu/Ubuntu-Light.ttf");
+}
+
+.btn {
+  display: inline-flex;
+  text-decoration: none;
+  padding: 2em 5em;
+  border: none;
+  background: none;
+  border-radius: 6px;
+  font-size: 18px;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  outline: none;
+}
+
+.btn:focus {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.btn:hover {
+  transition: 0.3s;
+}
+
+.btn-primary {
+  background: #464A52;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  opacity: 0.7;
+}
+
+.btn-outline-primary {
+  border: #464A52 solid 1px;
+  color: #464A52;
+}
+
+.btn-outline-primary:hover {
+  color: #ffffff;
+  background: #464A52;
+}
+
+.btn-success {
+  color: #ffffff;
+  background: #1D9C00;
+}
+
+.btn-success:hover {
+  opacity: 0.7;
+}
+
+.btn-outline-success {
+  color: #1D9C00;
+  border: #1D9C00 solid 1px;
+}
+
+.btn-outline-success:hover {
+  color: #ffffff;
+  background: #1D9C00;
+}
+
+.btn-danger {
+  color: #ffffff;
+  background: #dc3545;
+}
+
+.btn-danger:hover {
+  opacity: 0.7;
+}
+
+.btn-outline-danger {
+  border: #dc3545 solid 1px;
+  color: #dc3545;
+}
+
+.btn-outline-danger:hover {
+  background: #dc3545;
+  color: #ffffff;
+}
+
+.btn-default {
+  background: #c9c9c9;
+  color: #ffffff;
+}
+
+.btn-default:hover {
+  opacity: 0.7;
+}
+
+.btn-default-hover:hover {
+  background: #464A52;
+  opacity: 1;
+}
+
+.btn-outline-default {
+  border: #c9c9c9 solid 1px;
+  background: #ffffff;
+  color: #c9c9c9;
+}
+
+.btn-outline-default:hover {
+  color: #ffffff;
+  background: #c9c9c9;
+}
+
+.btn-white {
+  background: #ffffff;
+  color: #464A52;
+}
+
+.btn-white:hover {
+  opacity: 0.7;
+}
+
+.btn-shutdown {
+  color: #ffffff;
+  background: #dddddd;
+  pointer-events: none;
+}
+
+.btn-outline-shutdown {
+  color: #dddddd;
+  border: #dddddd solid 1px;
+  pointer-events: none;
+}
+
+.btn-link {
+  color: #464A52;
+}
+
+.btn-link-primary {
+  color: #464A52;
+}
+
+.btn-link-default {
+  color: #c9c9c9;
+}
+
+.btn-link-danger {
+  color: #dc3545;
+}
+
+.btn-link-success {
+  color: #1D9C00;
+}
+
+.btn-light {
+  font-family: "Roboto Light";
+}
+
+.btn-ultralight {
+  font-family: "Roboto Light";
+}
+
+.btn-bold {
+  font-family: "Roboto Bold";
+}
+
+.btn-angles {
+  border-radius: 5px;
+}
+
+.btn-radius {
+  border-radius: 80px;
+}
+
+.btn-block {
+  display: block;
+  text-align: center;
+  width: 100%;
+}
+
+.btn-lg {
+  font-size: 1.5em;
+  padding: 0.5em 0em;
+}
+
+.btn-md {
+  font-size: 1em;
+  padding: 0.9em 0em;
+}
+
+.btn-sm {
+  font-size: 0.6em;
+  padding: 0.6em 0em;
+}
+
+.btn-xs {
+  font-size: 0.4;
+  padding: 0.2em 0em;
+}
+
+.input-box {
+  padding: 0.8em 0;
+  position: relative;
+  width: 100%;
+}
+
+.input-box label {
+  padding-left: 0;
+  font-family: "Roboto Medium";
+  color: #464A52;
+  font-size: 0.8em;
+  position: absolute;
+  bottom: 1.6em;
+  opacity: 0.7;
+  transition: 0.3s;
+}
+
+.input-box label.upper {
+  bottom: 4em;
+  left: 0.4em;
+  font-size: 0.6em;
+  opacity: 0.4;
+}
+
+.input-box label.label-error {
+  color: #dc3545;
+}
+
+.input-box .input {
+  width: 100%;
+  position: relative;
+  padding: 0.1em 0.3em 0.1em;
+  line-height: 2.5em;
+  font-size: 0.75em;
+  color: #464A52;
+  border: none;
+  background: none;
+  border-bottom: solid 1px #464A52;
+  outline: none;
+  font-family: "Roboto Medium";
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 1em;
+}
+
+.input-box .input-error {
+  border-bottom: solid 1px #dc3545;
+  color: #dc3545;
+}
+
+.input-box .input::placeholder {
+  color: #A3ABB1;
+  font-family: "Roboto Light";
+}
+
+.input-box .input ::-ms-clear {
+  display: none;
+}
+
+.input-box .input ::-ms-reveal {
+  display: none;
+}
+
+@media screen and (max-width: 575px) {
+  .input-box .input-center {
+    text-align: center;
+    padding: 0.1em 0em;
+  }
+}
+
+.check {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-flow: row nowrap;
+  font-size: 1em;
+  margin-bottom: 1em;
+  color: #464A52;
+  font-family: "Roboto Regular";
+}
+
+.check .check-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 0.1px;
+  height: 0.1px;
+  overflow: hidden;
+  clip: rect 0 0 0 0;
+  display: block;
+  justify-content: space-evenly;
+}
+
+.check .check-box {
+  order: -1;
+  width: 1.25em;
+  height: 1.25em;
+  border: solid 0.1em #ffffff;
+  border-radius: 0.1em;
+  margin-right: 0.5em;
+  background: #ffffff;
+  display: block;
+  position: relative;
+}
+
+.check .check-input:checked + .check-box::after {
+  content: '';
+  background: #464A52;
+  width: 0.8em;
+  height: 0.8em;
+  border-radius: 0.09em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -0.4em;
+  margin-left: -0.4em;
+}
+
+.checkbox-block {
+  margin-top: 1em;
+}
+
+.container {
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  flex: 1 1 100%;
+}
+
+.container .inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.container .inner h1 {
+  font-size: 5.2em;
+  display: flex;
+}
+
+.container .inner .logo-box {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.container .inner .logo-box .logo {
+  background-image: url(../img/icons/semrush-logo-alt-white.svg);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  width: 7em;
+  height: 3em;
+  display: flex;
+  order: 1;
+}
+
+.invisibleScreen {
+  width: 100%;
+  z-index: 9000;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+.invisibleScreen #blink {
+  color: #ffffff;
+  border-bottom: none;
+  font-family: "Ubuntu Regular";
+  transition: 0.2s;
+  animation-duration: 1s;
+  animation-delay: 5s;
+  animation-name: blink;
+  animation-iteration-count: infinite;
+  opacity: 0;
+  margin: 20px;
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  text-decoration: none;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}
+
+.sign-bg {
+  background: #F0F0F0;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.sign-bg .sign-up {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.sign-bg .sign-up .title {
+  text-align: center;
+  font-size: 2em;
+  color: #464A52;
+  font-family: "Ubuntu Regular";
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.sign-bg .sign-up .registration {
+  display: flex;
+  flex-direction: column;
+  margin-top: -3em;
+}
+
+.sign-bg .sign-up .registration .checkcox-block {
+  margin-top: 1em;
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  color: #464A52;
+  font-family: "Roboto Regular";
+}
+
+.sign-bg .sign-up .registration .checkcox-block div {
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+.sign-bg .sign-up .registration button {
+  margin-top: 1em;
+}
+
+.game {
+  background-image: url(../img/SM_rocket_grey_horizont.png);
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.game .game-box {
+  background: #464A52;
+}
+
+.game .game-box .container {
+  height: auto;
+  display: felx;
+  flex-direction: column;
+}
+
+.game .game-box .container .wrapper .info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 1.3em 0;
+}
+
+.game .game-box .container .wrapper .info .distance {
+  background: #1D9C00;
+  border: solid 5px #1D9C00;
+  font-family: "Roboto Regular";
+  color: #ffffff;
+  border-radius: 5px;
+  padding: 0.1em 0.2em;
+}
+
+.game .game-box .container .wrapper .info .time {
+  color: #ffffff;
+  font-family: "Roboto Regular";
+  border: solid 5px #FF7F00;
+  padding: 0.1em 0.4em;
+  border-radius: 5px;
+}
+
+.game .game-box .container .wrapper .game-field {
+  display: felx;
+  justify-content: center;
+}
+
+.game .game-box .container .wrapper .game-field .question {
+  border: solid 1px #ffffff;
+  background: #ffffff;
+  text-align: center;
+  color: #464A52;
+  font-size: 1.5em;
+  padding: 0.7em 0;
+  border-radius: 0.25em;
+  font-family: "Ubuntu Regular";
+  margin-bottom: 0.8em;
+}
+
+.game .game-box .container .wrapper .game-field .answer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.game .game-box .container .wrapper .game-field .answer button {
+  width: 49%;
+  margin-bottom: 0.8em;
+  transition: 0.3s;
+  color: #464A52;
+}
+
+.game .game-box .container .wrapper .game-field .answer button:hover {
+  background: #FF7F00;
+  color: #ffffff;
+  opacity: 1;
+}
+
+.game .game-box .container .wrapper .game-field .answer .cross-box {
+  position: absolute;
+  bottom: 0.8em;
+  left: -3.9em;
+}
+
+.game .game-box .container .wrapper .game-field .answer .cross-box .cross {
+  position: relative;
+  width: 2.1em;
+  height: 2.1em;
+  transition: 0.3s;
+}
+
+.game .game-box .container .wrapper .game-field .answer .cross-box .cross::before {
+  content: '';
+  width: 3em;
+  height: 0.2em;
+  background: #7F878A;
+  border-radius: 0.1em;
+  position: absolute;
+  left: -0.46em;
+  top: 1em;
+  transform: rotate(45deg);
+}
+
+.game .game-box .container .wrapper .game-field .answer .cross-box .cross::after {
+  content: '';
+  width: 3em;
+  height: 0.2em;
+  background: #7F878A;
+  border-radius: 0.1em;
+  position: absolute;
+  left: -0.46em;
+  top: 1em;
+  transform: rotate(-45deg);
+}
+
+.modal-background {
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-background .modal {
+  padding: 85px;
+  background: white;
+  width: 70%;
+  margin: auto;
+  position: relative;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body, #app {
+  background: #464A52;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  min-height: 100vh;
+  font-size: 24px;
+  width: 100vw;
+}
+
+@media screen and (max-width: 768px) {
+  body, #app {
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  body, #app {
+    font-size: 16px;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 1440px;
+  min-width: 280px;
+  padding: 0 2em;
+  margin: 0 auto;
+  height: 100vh;
+}
+
+.container .wrapper {
+  max-width: 1120px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 2em;
+}
+
+.logo {
+  background-image: url(../img/icons/semrush-logo-white.svg);
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  height: 1em;
+  width: 10em;
+  margin: 0 auto;
+}

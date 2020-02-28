@@ -1,0 +1,153 @@
+
+
+.game
+    width: 100%
+    display: flex
+    flex-direction: column
+    justify-content: flex-end
+    position: relative
+    overflow: hidden
+    .game-background
+        width: 100vw
+        height: 100%
+        top: 0
+        left: 0
+        background-size: cover
+        background-repeat-y: no-repeat
+        background-repeat-x: repeat
+        background-image: url(../img/background_rocket.jpg)
+        position: relative
+        .rocket
+            background-image: url(../img/rocket.svg)
+            top: 50%
+            left: 42%
+            // transform: translate(-50%, -50%)
+            width: 20%
+            height: 17%
+            background-repeat: no-repeat
+            position: absolute
+        .smoke
+            background-image: url(../img/smoke.svg)
+            top: 50%;
+            left: 0;
+            margin-right: 50%;
+            transform: translate(-99.7%, -50%);
+            width: 100vw;
+            height: 13%;
+            background-position-y: 50%
+            background-repeat-y: no-repeat
+            position: absolute;
+            z-index: 2
+        .rocket-speed
+            animation-duration: 4s
+            animation-name: rocketSpeed
+            animation-timing-function: ease-in
+            @keyframes rocketSpeed
+                0%
+                    left: 42%
+                50%
+                    left: 52%
+                100%
+                    left: 42%
+    .game-box
+        background: $primary
+        position: relative
+        .container
+            height: auto
+            display: felx
+            flex-direction: column
+            .wrapper
+                .info
+                    display: flex
+                    align-items: center
+                    justify-content: space-between
+                    width: 100%
+                    margin: 1.3em 0
+                    .distance
+                        background: $success
+                        border: solid 5px $success
+                        font-family: $font-roboto-regular
+                        color: $white
+                        border-radius: 5px
+                        padding: 0.1em 0.2em
+                        font-size: 2em
+                    .time
+                        color: $white
+                        font-family: $font-roboto-regular
+                        border: solid 5px $orange
+                        padding: 0.1em 0.4em
+                        border-radius: 5px 
+                        font-size: 2em
+                .game-field
+                    display: felx
+                    justify-content: center
+                    .question
+                        border: solid 1px $white
+                        background: $white
+                        text-align: center
+                        color: $primary
+                        font-size: 1.5em
+                        padding: 0.7em 0 
+                        border-radius: 0.25em
+                        font-family: $font-ubuntu-regular
+                        margin-bottom: 0.8em
+                    .block-question
+                        opacity: 0.1
+                    .answer
+                        display: flex
+                        width: 100%
+                        justify-content: space-between
+                        flex-wrap: wrap
+                        position: relative
+                        button
+                            width: 49%
+                            margin-bottom: 0.8em
+                            transition: 0.3s
+                            color: $primary
+                            &:hover
+                                background: $orange
+                                color: $white
+                                opacity: 1
+                        .block-answer
+                            opacity: 0.1
+                            cursor: not-allowed
+                            &:hover
+                                color: $primary
+                                background: #c9c9c9
+                                opacity: 0.1
+                        .cross-box
+                            position: absolute
+                            bottom: 0.8em
+                            left: -3.9em
+                            .cross
+                                position: relative
+                                width: 2.1em
+                                height: 2.1em
+                                transition: 0.3s
+                                &::before
+                                    content: ''
+                                    width: 3em
+                                    height: 0.2em
+                                    background: #7F878A
+                                    border-radius: 0.1em
+                                    position: absolute
+                                    left: -0.46em
+                                    top: 1em
+                                    transform: rotate(45deg)
+    
+                                &::after
+                                    content: ''
+                                    width: 3em
+                                    height: 0.2em
+                                    background: #7F878A
+                                    border-radius: 0.1em
+                                    position: absolute
+                                    left: -0.46em
+                                    top: 1em
+                                    transform: rotate(-45deg)
+
+
+
+
+
+
