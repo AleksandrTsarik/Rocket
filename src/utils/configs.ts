@@ -1,45 +1,79 @@
 export const questions = [
   {
     id: 1,
-    question: "how1",
-    answers: ["lala", "lolo", "keke", "nooo!"],
-    right: 0,
+    question: "Question 1",
     distance: 100,
+    answers: [
+      {
+        lala: 1,
+      },
+      {
+        lolo: 0,
+      },
+      {
+        keke: 0,
+      },
+      {
+        "noo!": 0,
+      },
+    ],
   },
   {
     id: 2,
-    question: "how2",
-    answers: ["lala", "lolo", "keke", "nooo!"],
-    right: 1,
+    question: "Question 2",
     distance: 300,
+    answers: [
+      {
+        lala: 0,
+      },
+      {
+        lolo: 1,
+      },
+      {
+        keke: 0,
+      },
+      {
+        "noo!": 0,
+      },
+    ],
   },
   {
-    id: 3,
-    question: "how3",
-    answers: ["lala", "lolo", "keke", "nooo!"],
-    right: 2,
+    id: 2,
+    question: "Question 2",
     distance: 300,
+    answers: [
+      {
+        lala: 0,
+      },
+      {
+        lolo: 1,
+      },
+      {
+        keke: 0,
+      },
+      {
+        "noo!": 1,
+      },
+    ],
   },
   {
-    id: 4,
-    question: "how4",
-    answers: ["lala", "lolo", "keke", "nooo!"],
-    right: 3,
-    distance: 400,
-  },
-  {
-    id: 5,
-    question: "how5",
-    answers: ["lala", "lolo", "keke", "nooo!"],
-    right: 0,
-    distance: 400,
-  },
-  {
-    id: 6,
-    question: "how6",
-    answers: ["lala", "lolo", "keke", "nooo!"],
-    right: 1,
-    distance: 400,
+    id: 2,
+    question: "Question 2",
+    distance: 300,
+    answers: [
+      {
+        lala: 0,
+      },
+      {
+        lolo: 1,
+      },
+      {
+        keke: 1,
+      },
+      {
+        "noo!": 0,
+      },
+    ],
   },
 ];
 export const letters = ["A", "B", "C", "D"];
