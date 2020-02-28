@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import * as Middleware from "../../middlewares";
-import * as Store from "../../actions/Store";
 
 interface PropsInterface {
   location: any;
@@ -16,17 +15,17 @@ class Rules extends React.Component<PropsInterface> {
       <>
         <div className="modal-background">
           <div className="modal">
-            <h1 className="title">Правила игры</h1>
+            <h1 className="title">Game rules</h1>
             <div className="text">
               <p>
-                Для того чтобы собрать пазл, вам нужно правильно расставить фрагменты кода в течение
-                одной минуты
+                In order to assemble the puzzle, you need to place the code fragments correctly
+                within one minute
               </p>
               <p>
-                В случае проигрыша вы можете продолжить с того места на котором остановились, отсчет
-                времени будет восстановлен.
+                If you lose, you can continue from where you left off, and the countdown will be
+                restored.
               </p>
-              <p>За каждую неверную попытку вы теряете 5 секунд.</p>
+              <p>For each incorrect attempt, you lose 5 seconds.</p>
             </div>
             <div className="btn-box">
               <button
