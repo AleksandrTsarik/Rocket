@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter, Redirect } from "react-router-dom";
 import * as Middleware from "../../middlewares";
-import { questions, letters, config } from "../../utils/configs";
+import { letters } from "../../utils/configs";
 import "csshake";
 
 interface PropsInterface {
@@ -165,10 +165,10 @@ class Game extends React.Component<PropsInterface, StateInterface> {
 
   gameStep(answer: number) {
     if (this.state.timer > 0) {
-      if (this.state.questions[this.state.step].right === answer) {
+      if (answer === 1) {
         this.setRocketAnimation(true);
         this.setState({
-          distance: this.state.distance + this.props.Store.Game.questions[answer].distance,
+          distance: this.state.distance + this.props.Store.Game.questions[this.state.step].distance,
           right: this.state.right + 1,
         });
       } else {
@@ -181,10 +181,21 @@ class Game extends React.Component<PropsInterface, StateInterface> {
     } else {
       this.props.Dispatch(
         Middleware.Player.result({
-          right: this.state.right,
           time: this.state.timer,
+          distance: this.state.distance,
+          correct_answers: this.state.right,
         })
       );
+      this.props.Dispatch(Middleware.Game.best());
+
+      this.props.Dispatch(
+        Middleware.Game.send({
+          player_id: this.props.Store.Player.id,
+          distance: this.state.distance,
+          correct_answers: this.state.right,
+        })
+      );
+
       this.props.Dispatch(Middleware.Modal.open("Win"));
     }
 
@@ -193,10 +204,20 @@ class Game extends React.Component<PropsInterface, StateInterface> {
         Middleware.Player.result({
           player_id: this.props.Store.Player.id,
           distance: this.state.distance,
-          right: this.state.right,
+          correct_answers: this.state.right,
           time: this.state.timer,
         })
       );
+      this.props.Dispatch(Middleware.Game.best());
+
+      this.props.Dispatch(
+        Middleware.Game.send({
+          player_id: this.props.Store.Player.id,
+          distance: this.state.distance,
+          correct_answers: this.state.right,
+        })
+      );
+
       this.props.Dispatch(Middleware.Modal.open("Win"));
     }
   }
@@ -275,23 +296,23 @@ class Game extends React.Component<PropsInterface, StateInterface> {
                           <a href="#" className="cross-box" onClick={() => this.exit()}>
                             <div className="cross" />
                           </a>
-                          {questions[this.state.step].answers.map(
-                            (answer: string, index: number) => {
-                              return (
-                                <button
-                                  key={index}
-                                  onClick={() => this.gameStep(index)}
-                                  disabled={this.state.blockIntarface}
-                                  className={
-                                    "btn btn-default btn-block btn-md " +
-                                    (this.state.blockIntarface ? "block-answer" : "")
-                                  }
-                                >
-                                  <b>{letters[index]}:</b> {answer}
-                                </button>
-                              );
-                            }
-                          )}
+                          {this.state.questions[this.state.step].answers.map((item, index) => {
+                            const text = Object.entries(item)[0][0];
+                            const answer = Object.entries(item)[0][1];
+                            return (
+                              <button
+                                key={index}
+                                onClick={() => this.gameStep(answer)}
+                                disabled={this.state.blockIntarface}
+                                className={
+                                  "btn btn-default btn-block btn-md " +
+                                  (this.state.blockIntarface ? "block-answer" : "")
+                                }
+                              >
+                                <b>{letters[index]}:</b> {text}
+                              </button>
+                            );
+                          })}
                         </div>
                       </>
                     ) : (

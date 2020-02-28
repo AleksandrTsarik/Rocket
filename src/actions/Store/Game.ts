@@ -4,11 +4,25 @@ export default class Game {
   public static readonly FINISH = "GAME_FINISH";
   public static readonly STATUS = "GAME_STATUS";
   public static readonly CLEAR = "GAME_CLEAR";
+  public static readonly BEST = "GAME_BEST";
+  public static readonly CONFIG = "GAME_CONFIG";
 
   public static create(data: any) {
     return {
       data,
       type: Game.CREATE,
+    };
+  }
+  public static config(data: any) {
+    return {
+      data,
+      type: Game.CONFIG,
+    };
+  }
+  public static best(data: any) {
+    return {
+      data,
+      type: Game.BEST,
     };
   }
 

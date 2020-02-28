@@ -25,28 +25,24 @@ class Win extends React.Component<PropsInterface> {
               <div className="questions">
                 Correct questions:{" "}
                 <span>
-                  {this.props.Store.Player.right} ({this.props.Store.Game.questions.length})
+                  {this.props.Store.Player.correct_answers} (
+                  {this.props.Store.Game.questions.length})
                 </span>
               </div>
             </div>
             <div className="best-result">
               <div>Best Result:</div>
               <div className="distance">
-                Distance <span>{this.props.Store.Game.bestResult.distance} pc</span>
+                Distance <span>{this.props.Store.Game.best.distance} pc</span>
               </div>
               <div className="questions">
                 Correct questions:{" "}
                 <span>
-                  {this.props.Store.Game.bestResult.anwers} (
-                  {this.props.Store.Game.bestResult.total})
+                  {this.props.Store.Game.best.correct_answers} (
+                  {this.props.Store.Game.questions.length})
                 </span>
               </div>
             </div>
-            {/* <div className="console">
-              <div className="info-green">Сompiled successfully! </div>
-              <p className="souvenir">Take a souvenir with a SEMrush firewall</p>
-              <p>Press enter to exit ...</p>
-            </div> */}
             <div className="btn-box">
               <Link
                 to="/"
@@ -54,7 +50,6 @@ class Win extends React.Component<PropsInterface> {
                 onClick={() => {
                   this.props.Dispatch(Middleware.Modal.closeAll());
                   this.props.Dispatch(Middleware.Player.clear());
-                  this.props.Dispatch(Middleware.Game.finish(this.props.Store.Player));
                   this.props.history.push("/");
                 }}
               >

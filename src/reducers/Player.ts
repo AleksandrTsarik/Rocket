@@ -13,7 +13,7 @@ export default function Player(state = [], action: any) {
       return {
         ...state,
         time: action.data.time,
-        right: action.data.right,
+        correct_answers: action.data.correct_answers,
         distance: action.data.distance,
       };
     default:
