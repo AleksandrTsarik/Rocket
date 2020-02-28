@@ -30,8 +30,11 @@ export default class Player {
    * @return function(Dispatch)->User
    */
   public static send(data: any) {
-    return async (Dispatch: any) => {
-      Dispatch(Store.Player.send(data));
+    return async (dispatch: any) => {
+      new Models.Game()
+        .send(data)
+        .then(() => {})
+        .catch((Exception) => {});
     };
   }
 

@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter, Redirect } from "react-router-dom";
 import * as Middleware from "../../middlewares";
-import { questions, letters, config } from "../../utils/configs";
+import { letters } from "../../utils/configs";
 import "csshake";
 
 interface PropsInterface {
@@ -183,8 +183,20 @@ class Game extends React.Component<PropsInterface, StateInterface> {
         Middleware.Player.result({
           right: this.state.right,
           time: this.state.timer,
+          distance: this.state.distance,
+          correct_answers: this.state.right,
         })
       );
+      this.props.Dispatch(Middleware.Game.bestResult());
+
+      this.props.Dispatch(
+        Middleware.Game.send({
+          player_id: this.props.Store.Player.id,
+          distance: this.state.distance,
+          correct_answers: this.state.right,
+        })
+      );
+
       this.props.Dispatch(Middleware.Modal.open("Win"));
     }
 
@@ -193,10 +205,20 @@ class Game extends React.Component<PropsInterface, StateInterface> {
         Middleware.Player.result({
           player_id: this.props.Store.Player.id,
           distance: this.state.distance,
-          right: this.state.right,
+          correct_answers: this.state.right,
           time: this.state.timer,
         })
       );
+      this.props.Dispatch(Middleware.Game.bestResult());
+
+      this.props.Dispatch(
+        Middleware.Game.send({
+          player_id: this.props.Store.Player.id,
+          distance: this.state.distance,
+          correct_answers: this.state.right,
+        })
+      );
+
       this.props.Dispatch(Middleware.Modal.open("Win"));
     }
   }
@@ -275,7 +297,7 @@ class Game extends React.Component<PropsInterface, StateInterface> {
                           <a href="#" className="cross-box" onClick={() => this.exit()}>
                             <div className="cross" />
                           </a>
-                          {questions[this.state.step].answers.map((item, index) => {
+                          {this.state.questions[this.state.step].answers.map((item, index) => {
                             const text = Object.entries(item)[0][0];
                             const answer = Object.entries(item)[0][1];
                             return (
@@ -288,7 +310,7 @@ class Game extends React.Component<PropsInterface, StateInterface> {
                                   (this.state.blockIntarface ? "block-answer" : "")
                                 }
                               >
-                                <b>{letters[index]}:</b> {text}!!!{answer}
+                                <b>{letters[index]}:</b> {text}
                               </button>
                             );
                           })}

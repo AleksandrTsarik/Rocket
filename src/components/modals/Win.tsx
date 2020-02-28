@@ -32,21 +32,12 @@ class Win extends React.Component<PropsInterface> {
             <div className="best-result">
               <div>Best Result:</div>
               <div className="distance">
-                Distance <span>{this.props.Store.Game.bestResult.distance} pc</span>
+                Distance <span>5000 pc</span>
               </div>
               <div className="questions">
-                Correct questions:{" "}
-                <span>
-                  {this.props.Store.Game.bestResult.anwers} (
-                  {this.props.Store.Game.bestResult.total})
-                </span>
+                Correct questions: <span>7 (7)</span>
               </div>
             </div>
-            {/* <div className="console">
-              <div className="info-green">Сompiled successfully! </div>
-              <p className="souvenir">Take a souvenir with a SEMrush firewall</p>
-              <p>Press enter to exit ...</p>
-            </div> */}
             <div className="btn-box">
               <Link
                 to="/"
@@ -54,7 +45,6 @@ class Win extends React.Component<PropsInterface> {
                 onClick={() => {
                   this.props.Dispatch(Middleware.Modal.closeAll());
                   this.props.Dispatch(Middleware.Player.clear());
-                  this.props.Dispatch(Middleware.Game.finish(this.props.Store.Player));
                   this.props.history.push("/");
                 }}
               >
