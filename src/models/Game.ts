@@ -19,7 +19,7 @@ export default class Player extends ModelPrototype {
       throw Exception;
     }
   }
-  public async bestResult(): Promise<any[]> {
+  public async best(): Promise<any[]> {
     try {
       return this.withUrl("game/best")
         .setMethod(Method.GET)
@@ -38,7 +38,7 @@ export default class Player extends ModelPrototype {
       throw Exception;
     }
   }
-  
+
   public async finish(data: any): Promise<any[]> {
     try {
       return this.withUrl("game/save-result")

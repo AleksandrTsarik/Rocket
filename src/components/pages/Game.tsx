@@ -160,7 +160,7 @@ class Game extends React.Component<PropsInterface, StateInterface> {
       this.setState({
         blockIntarface: false,
       });
-    }, 1500);
+    }, 1500)
   }
 
   gameStep(answer: number) {
@@ -181,13 +181,12 @@ class Game extends React.Component<PropsInterface, StateInterface> {
     } else {
       this.props.Dispatch(
         Middleware.Player.result({
-          right: this.state.right,
           time: this.state.timer,
           distance: this.state.distance,
           correct_answers: this.state.right,
         })
       );
-      this.props.Dispatch(Middleware.Game.bestResult());
+      this.props.Dispatch(Middleware.Game.best());
 
       this.props.Dispatch(
         Middleware.Game.send({
@@ -209,7 +208,7 @@ class Game extends React.Component<PropsInterface, StateInterface> {
           time: this.state.timer,
         })
       );
-      this.props.Dispatch(Middleware.Game.bestResult());
+      this.props.Dispatch(Middleware.Game.best());
 
       this.props.Dispatch(
         Middleware.Game.send({

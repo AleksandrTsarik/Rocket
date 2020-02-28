@@ -1,5 +1,5 @@
 import * as Action from "../actions";
-import { config, bestResult } from '../utils/configs';
+import { config } from "../utils/configs";
 
 export default function Game(state = [], action: any) {
   switch (action.type) {
@@ -8,16 +8,20 @@ export default function Game(state = [], action: any) {
         ...state,
         status: action.data,
       };
+    case Action.Store.Game.CONFIG:
+      return {
+        ...state,
+        time: config.time,
+      };
     case Action.Store.Game.START:
       return {
         ...state,
         questions: action.data,
-        time: config.time,
       };
     case Action.Store.Game.BEST:
       return {
         ...state,
-        bestResult: action.data,
+        best: action.data,
       };
     case Action.Store.Game.CLEAR:
       return [];

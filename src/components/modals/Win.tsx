@@ -25,17 +25,21 @@ class Win extends React.Component<PropsInterface> {
               <div className="questions">
                 Correct questions:{" "}
                 <span>
-                  {this.props.Store.Player.right} ({this.props.Store.Game.questions.length})
+                  {this.props.Store.Player.correct_answers} ({this.props.Store.Game.questions.length})
                 </span>
               </div>
             </div>
             <div className="best-result">
               <div>Best Result:</div>
               <div className="distance">
-                Distance <span>5000 pc</span>
+                Distance <span>{this.props.Store.Game.best.distance} pc</span>
               </div>
               <div className="questions">
-                Correct questions: <span>7 (7)</span>
+                Correct questions:{" "}
+                <span>
+                  {this.props.Store.Game.best.correct_answers} (
+                  {this.props.Store.Game.questions.length})
+                </span>
               </div>
             </div>
             <div className="btn-box">
