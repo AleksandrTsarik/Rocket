@@ -14,6 +14,7 @@ interface PropsInterface {
 
 interface StateInterface {
   timer: number;
+  fall: number;
   step: number;
   right: number;
   minutes: string;
@@ -38,6 +39,7 @@ class Game extends React.Component<PropsInterface, StateInterface> {
     super(Props);
     this.state = {
       timer: 0,
+      fall: 0,
       step: 0,
       right: 0,
       minutes: "00",
@@ -73,7 +75,8 @@ class Game extends React.Component<PropsInterface, StateInterface> {
         {
           runGame: true,
           questions: this.props.Store.Game.questions,
-          timer: this.props.Store.Game.time,
+          timer: this.props.Store.Game.config.time,
+          fall: this.props.Store.Game.config.fall,
         },
         () => {
           this.clock();
@@ -129,12 +132,12 @@ class Game extends React.Component<PropsInterface, StateInterface> {
     });
   }
 
-  setRocketAnimation(wha: boolean) {
+  setRocketAnimation(correct: boolean) {
     let timing = 0;
     this.setState({
       blockIntarface: true,
     });
-    if (wha) {
+    if (correct) {
       this.setState({
         animationRocket: "rocket-speed",
         backgroundSpeedBonus: this.state.backgroundSpeedBonus + 1,
@@ -173,7 +176,7 @@ class Game extends React.Component<PropsInterface, StateInterface> {
         });
       } else {
         this.setRocketAnimation(false);
-        this.setTimer(this.props.Store.Game.fall);
+        this.setTimer(-this.state.fall + 2); // TODO: голова болит, не понимаю чё за нахер, но фикс вот
       }
       this.setState({
         step: this.state.step + 1,
