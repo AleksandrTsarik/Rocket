@@ -11,7 +11,7 @@ export default function Game(state = [], action: any) {
     case Action.Store.Game.CONFIG:
       return {
         ...state,
-        time: config.time,
+        config: action.data,
       };
     case Action.Store.Game.START:
       return {
