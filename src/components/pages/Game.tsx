@@ -14,7 +14,9 @@ interface PropsInterface {
 
 interface StateInterface {
   timer: number;
+  timerSeconds: number;
   fall: number;
+  fallTimer: boolean;
   step: number;
   right: number;
   minutes: string;
@@ -39,7 +41,9 @@ class Game extends React.Component<PropsInterface, StateInterface> {
     super(Props);
     this.state = {
       timer: 0,
+      timerSeconds: 0,
       fall: 0,
+      fallTimer: false,
       step: 0,
       right: 0,
       minutes: "00",
@@ -120,16 +124,36 @@ class Game extends React.Component<PropsInterface, StateInterface> {
   }
 
   // Check timer and update
-  setTimer(bonus?: number) {
-    let newTimer = this.state.timer - 1 + (bonus || 0);
+  setTimer() {
+    if (this.state.timerSeconds === 9) {
+      // for smooth timer
+      let newTimer = this.state.timer - 1;
 
-    if (newTimer < 0) {
-      newTimer = 0;
+      if (newTimer < 0) {
+        newTimer = 0;
+      }
+
+      this.setState({
+        timer: newTimer,
+        timerSeconds: 0,
+      });
+    } else {
+      this.setState({
+        timerSeconds: this.state.timerSeconds + 1,
+      });
     }
 
-    this.setState({
-      timer: newTimer,
-    });
+    // wrong answer -> minus time
+    if (this.state.fallTimer) {
+      let newTimer = this.state.timer - this.props.Store.Game.config.fall;
+      if (newTimer < 0) {
+        newTimer = 0;
+      }
+      this.setState({
+        fallTimer: false,
+        timer: newTimer,
+      });
+    }
   }
 
   setRocketAnimation(correct: boolean) {
@@ -176,12 +200,16 @@ class Game extends React.Component<PropsInterface, StateInterface> {
         });
       } else {
         this.setRocketAnimation(false);
-        this.setTimer(-this.state.fall + 2); // TODO: голова болит, не понимаю чё за нахер, но фикс вот
+        // set bad news
+        this.setState({
+          fallTimer: true,
+        });
       }
       this.setState({
         step: this.state.step + 1,
       });
     } else {
+      // GG time is up
       this.props.Dispatch(
         Middleware.Player.result({
           time: this.state.timer,
@@ -203,6 +231,7 @@ class Game extends React.Component<PropsInterface, StateInterface> {
     }
 
     if (this.state.step >= this.state.questions.length - 1) {
+      // GG end game
       this.props.Dispatch(
         Middleware.Player.result({
           player_id: this.props.Store.Player.id,
@@ -228,12 +257,12 @@ class Game extends React.Component<PropsInterface, StateInterface> {
   // Every second
   clock() {
     this.timeToString();
-    // game in playing
+    // game playing
     if (this.state.timer > 0 && this.props.Store.Modal.length === 0) {
       if (!this.state.blockIntarface) {
         this.setTimer();
       }
-      this.timerGame = setTimeout(() => this.clock(), 1000); // timeout дабы избежать лагов при работе с таймером
+      this.timerGame = setTimeout(() => this.clock(), 100); // timeout дабы избежать лагов при работе с таймером
     } else {
       this.props.Dispatch(Middleware.Modal.open("Win"));
     }
@@ -299,23 +328,25 @@ class Game extends React.Component<PropsInterface, StateInterface> {
                           <a href="#" className="cross-box" onClick={() => this.exit()}>
                             <div className="cross" />
                           </a>
-                          {this.state.questions[this.state.step].answers.map((item, index) => {
-                            const text = Object.entries(item)[0][0];
-                            const answer = Object.entries(item)[0][1];
-                            return (
-                              <button
-                                key={index}
-                                onClick={() => this.gameStep(answer)}
-                                disabled={this.state.blockIntarface}
-                                className={
-                                  "btn btn-default btn-block btn-md " +
-                                  (this.state.blockIntarface ? "block-answer" : "")
-                                }
-                              >
-                                <b>{letters[index]}:</b> {text}
-                              </button>
-                            );
-                          })}
+                          {this.state.questions[this.state.step].answers.map(
+                            (item: any, index: number) => {
+                              const text = Object.entries(item)[0][0];
+                              const answer = Object.entries(item)[0][1];
+                              return (
+                                <button
+                                  key={index}
+                                  onClick={() => this.gameStep(answer)}
+                                  disabled={this.state.blockIntarface}
+                                  className={
+                                    "btn btn-default btn-block btn-md " +
+                                    (this.state.blockIntarface ? "block-answer" : "")
+                                  }
+                                >
+                                  <b>{letters[index]}:</b> {text}
+                                </button>
+                              );
+                            }
+                          )}
                         </div>
                       </>
                     ) : (
