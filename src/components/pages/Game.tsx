@@ -187,7 +187,7 @@ class Game extends React.Component<PropsInterface, StateInterface> {
       this.setState({
         blockIntarface: false,
       });
-    }, 1500);
+    }, 15); // TODO: 1500
   }
 
   gameStep(answer: number) {
@@ -200,7 +200,6 @@ class Game extends React.Component<PropsInterface, StateInterface> {
         });
       } else {
         this.setRocketAnimation(false);
-        // set bad news
         this.setState({
           fallTimer: true,
         });

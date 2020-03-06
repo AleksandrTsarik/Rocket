@@ -28,21 +28,11 @@ export default class Game {
   }
 
   public static send(data: any) {
+    // set ping server there!
     return async (dispatch: any) => {
       new Models.Game()
         .send(data)
         .then(() => {})
-        .catch((Exception) => {});
-    };
-  }
-
-  public static finish(data: any) {
-    return async (dispatch: any) => {
-      new Models.Game()
-        .finish(data)
-        .then((data: any[]) => {
-          dispatch(Store.Game.finish(data.data));
-        })
         .catch((Exception) => {});
     };
   }
