@@ -3,4 +3,5 @@ debug.log
 node_modules
 package-lock.json
 yarn.lock
+yarn-error.log
 dist

@@ -202,7 +202,7 @@ class Registration extends React.Component<PropsInterface, StateInterface> {
               </form>
               <div className="btn-box">
                 <button className="btn btn-block btn-primary btn-md" onClick={this.registration}>
-                  sing up
+                  GO!
                 </button>
                 <div className="logo" />
               </div>
