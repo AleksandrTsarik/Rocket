@@ -11,8 +11,8 @@ interface PropsInterface {
 }
 
 interface StateInterface {
-  firstName: string;
-  lastName: string;
+  firstname: string;
+  lastname: string;
   email: string;
   personalData: boolean;
   city: boolean;
@@ -23,8 +23,8 @@ class Registration extends React.Component<PropsInterface, StateInterface> {
   constructor(Props: PropsInterface) {
     super(Props);
     this.state = {
-      firstName: "",
-      lastName: "",
+      firstname: "",
+      lastname: "",
       email: "",
       personalData: false,
       city: false,
@@ -45,8 +45,8 @@ class Registration extends React.Component<PropsInterface, StateInterface> {
 
   checkInputs() {
     if (
-      this.state.firstName &&
-      this.state.lastName &&
+      this.state.firstname &&
+      this.state.lastname &&
       this.state.email &&
       this.checkEmail(this.state.email) &&
       this.state.personalData
@@ -66,9 +66,10 @@ class Registration extends React.Component<PropsInterface, StateInterface> {
       this.props.Dispatch(
         Middleware.Player.create({
           email: this.state.email,
-          firstName: this.state.firstName,
-          lastName: this.state.lastName,
+          firstname: this.state.firstname,
+          lastname: this.state.lastname,
           city_id: this.state.city === false ? 0 : process.env.CITY_ID,
+          created_at: Math.round(new Date().getTime() / 1000), // unix timestamp
         })
       );
       this.props.history.push("/game");
@@ -161,16 +162,16 @@ class Registration extends React.Component<PropsInterface, StateInterface> {
               <form className="registration" autoComplete="off">
                 <this.input
                   label="FIRST NAME *"
-                  name="firstName"
+                  name="firstname"
                   type="text"
-                  value={this.state.firstName}
+                  value={this.state.firstname}
                   required={true}
                 />
                 <this.input
                   label="LAST NAME *"
-                  name="lastName"
+                  name="lastname"
                   type="text"
-                  value={this.state.lastName}
+                  value={this.state.lastname}
                   required={true}
                 />
                 <this.input

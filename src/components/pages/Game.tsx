@@ -14,6 +14,7 @@ interface PropsInterface {
 
 interface StateInterface {
   timer: number;
+  start_at: number;
   timerSeconds: number;
   fall: number;
   fallTimer: boolean;
@@ -41,6 +42,7 @@ class Game extends React.Component<PropsInterface, StateInterface> {
     super(Props);
     this.state = {
       timer: 0,
+      start_at: 0,
       timerSeconds: 0,
       fall: 0,
       fallTimer: false,
@@ -61,7 +63,8 @@ class Game extends React.Component<PropsInterface, StateInterface> {
       blockIntarface: false,
     };
     this.timeToString = this.timeToString.bind(this);
-    this.setRocketAnimation = this.setRocketAnimation.bind(this);
+    this.setAnimation = this.setAnimation.bind(this);
+    this.gg = this.gg.bind(this);
   }
 
   public componentDidMount() {
@@ -75,12 +78,19 @@ class Game extends React.Component<PropsInterface, StateInterface> {
       prevProps !== this.props &&
       this.state.runGame === false
     ) {
+      // get from localStorage
+      const settings = JSON.parse(localStorage.settings);
+      const questions = JSON.parse(localStorage.questions);
+      const shuffledQuestions = questions.sort(() => {
+        return Math.random() - 0.5;
+      });
       this.setState(
         {
           runGame: true,
-          questions: this.props.Store.Game.questions,
-          timer: this.props.Store.Game.config.time,
-          fall: this.props.Store.Game.config.fall,
+          questions: shuffledQuestions,
+          timer: settings.time,
+          fall: settings.fall,
+          start_at: Math.round(new Date().getTime() / 1000),
         },
         () => {
           this.clock();
@@ -156,7 +166,7 @@ class Game extends React.Component<PropsInterface, StateInterface> {
     }
   }
 
-  setRocketAnimation(correct: boolean) {
+  setAnimation(correct: boolean) {
     let timing = 0;
     this.setState({
       blockIntarface: true,
@@ -187,20 +197,48 @@ class Game extends React.Component<PropsInterface, StateInterface> {
       this.setState({
         blockIntarface: false,
       });
-    }, 1500);
+    }, 15); // set 1500
+  }
+
+  gg() {
+    const game = {
+      Player: {
+        firstname: this.props.Store.Player.firstname,
+        lastname: this.props.Store.Player.lastname,
+        email: this.props.Store.Player.email,
+        created_at: this.props.Store.Player.created_at,
+        city_id: this.props.Store.Player.city_id,
+      },
+      Game: {
+        started_at: this.state.start_at,
+        end_at: Math.round(new Date().getTime() / 1000),
+        score: this.state.distance,
+      },
+    };
+    // this.props.Dispatch(
+    //   Middleware.Game.send({
+    //     firstname: this.props.Store.Player.firstname,
+    //     lastname: this.props.Store.Player.lastname,
+    //     email: this.props.Store.Player.email,
+    //     distance: this.state.distance,
+    //     correct_answers: this.state.right,
+    //   })
+    // );
+    this.props.Dispatch(Middleware.Game.send(game));
+
+    this.props.Dispatch(Middleware.Modal.open("Win"));
   }
 
   gameStep(answer: number) {
     if (this.state.timer > 0) {
       if (answer === 1) {
-        this.setRocketAnimation(true);
+        this.setAnimation(true);
         this.setState({
           distance: this.state.distance + this.props.Store.Game.questions[this.state.step].distance,
           right: this.state.right + 1,
         });
       } else {
-        this.setRocketAnimation(false);
-        // set bad news
+        this.setAnimation(false);
         this.setState({
           fallTimer: true,
         });
@@ -210,47 +248,12 @@ class Game extends React.Component<PropsInterface, StateInterface> {
       });
     } else {
       // GG time is up
-      this.props.Dispatch(
-        Middleware.Player.result({
-          time: this.state.timer,
-          distance: this.state.distance,
-          correct_answers: this.state.right,
-        })
-      );
-      this.props.Dispatch(Middleware.Game.best());
-
-      this.props.Dispatch(
-        Middleware.Game.send({
-          player_id: this.props.Store.Player.id,
-          distance: this.state.distance,
-          correct_answers: this.state.right,
-        })
-      );
-
-      this.props.Dispatch(Middleware.Modal.open("Win"));
+      this.gg();
     }
 
     if (this.state.step >= this.state.questions.length - 1) {
       // GG end game
-      this.props.Dispatch(
-        Middleware.Player.result({
-          player_id: this.props.Store.Player.id,
-          distance: this.state.distance,
-          correct_answers: this.state.right,
-          time: this.state.timer,
-        })
-      );
-      this.props.Dispatch(Middleware.Game.best());
-
-      this.props.Dispatch(
-        Middleware.Game.send({
-          player_id: this.props.Store.Player.id,
-          distance: this.state.distance,
-          correct_answers: this.state.right,
-        })
-      );
-
-      this.props.Dispatch(Middleware.Modal.open("Win"));
+      this.gg();
     }
   }
 

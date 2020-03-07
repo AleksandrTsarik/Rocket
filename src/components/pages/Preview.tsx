@@ -20,7 +20,9 @@ class Preview extends React.Component<PropsInterface, {}> {
     this.props.Dispatch(Middleware.Modal.closeAll());
     this.props.Dispatch(Middleware.Player.clear());
     this.props.Dispatch(Middleware.Game.clear());
+
     // get settings, questions and bestResult
+    this.props.Dispatch(Middleware.Game.initialData());
   }
 
   public render() {

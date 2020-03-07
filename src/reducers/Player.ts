@@ -3,10 +3,7 @@ import * as Action from "../actions";
 export default function Player(state = [], action: any) {
   switch (action.type) {
     case Action.Store.Player.CREATE:
-      return {
-        ...state,
-        id: action.data,
-      };
+      return action.data;
     case Action.Store.Player.CLEAR:
       return [];
     case Action.Store.Player.RESULT:

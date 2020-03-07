@@ -1,6 +1,26 @@
 import ModelPrototype, { Method } from "./ModelPrototype";
 
 export default class Player extends ModelPrototype {
+  public async initialData(): Promise<any[]> {
+    try {
+      return this.withUrl("initialData")
+        .setMethod(Method.POST)
+        .request();
+    } catch (Exception) {
+      throw Exception;
+    }
+  }
+  public async uploadGameDate(data: any): Promise<any[]> {
+    try {
+      return this.withUrl("uploadGameDate")
+        .setMethod(Method.POST)
+        .request(data);
+    } catch (Exception) {
+      throw Exception;
+    }
+  }
+
+  // old models
   public async create(data: any): Promise<any[]> {
     try {
       return this.withUrl("game/start")
@@ -19,27 +39,7 @@ export default class Player extends ModelPrototype {
       throw Exception;
     }
   }
-  public async best(): Promise<any[]> {
-    try {
-      return this.withUrl("game/best")
-        .setMethod(Method.GET)
-        .request();
-    } catch (Exception) {
-      throw Exception;
-    }
-  }
-
   public async send(data: any): Promise<any[]> {
-    try {
-      return this.withUrl("game/save-result")
-        .setMethod(Method.POST)
-        .request(data);
-    } catch (Exception) {
-      throw Exception;
-    }
-  }
-
-  public async finish(data: any): Promise<any[]> {
     try {
       return this.withUrl("game/save-result")
         .setMethod(Method.POST)
