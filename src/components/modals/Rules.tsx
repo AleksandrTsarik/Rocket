@@ -18,20 +18,17 @@ class Rules extends React.Component<PropsInterface> {
             <h1 className="title">Game rules</h1>
             <div className="text">
               <p>
-                In order to assemble the puzzle, you need to place the code fragments correctly
-                within one minute
+                Answer questions in the allotted time. The reward for questions depends on their
+                complexity.
               </p>
-              <p>
-                If you lose, you can continue from where you left off, and the countdown will be
-                restored.
-              </p>
-              <p>For each incorrect attempt, you lose 5 seconds.</p>
+              <p>For the wrong answer, they will take your time.</p>
+              <p>Good luck!</p>
             </div>
             <div className="btn-box">
               <button
                 className="btn btn-primary btn-block btn-md"
                 onClick={() => {
-                  this.props.Dispatch(Middleware.Game.start(this.props.Store.Player.id));
+                  this.props.Dispatch(Middleware.Game.status("start"));
                   this.props.Dispatch(Middleware.Modal.close());
                 }}
               >

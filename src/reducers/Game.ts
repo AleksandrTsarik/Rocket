@@ -13,7 +13,7 @@ export default function Game(state = [], action: any) {
         ...state,
         config: action.data,
       };
-    case Action.Store.Game.START:
+    case Action.Store.Game.QUESTIONS:
       return {
         ...state,
         questions: action.data,

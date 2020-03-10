@@ -21,21 +21,7 @@ export default class Player {
   }
 
   /**
-   * Отправить юзера на бек
-   *
-   * @return function(Dispatch)->User
-   */
-  public static send(data: any) {
-    return async (dispatch: any) => {
-      new Models.Game()
-        .send(data)
-        .then(() => {})
-        .catch((Exception) => {});
-    };
-  }
-
-  /**
-   * Очистить юзера
+   * Очистить юзера, наигрался
    *
    * @return function(Dispatch)->User
    */

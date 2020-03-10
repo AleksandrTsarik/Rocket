@@ -34,11 +34,7 @@ export default abstract class ModelPrototype {
           });
           break;
         case Method.POST:
-          Response = await axios.post(url.toString(), data ? data : {}, {
-            headers: {
-              Accept: "application/json",
-            },
-          });
+          Response = await axios.post(url.toString(), data);
           break;
         case Method.PUT:
           Response = await axios.put(url.toString(), data ? data : {}, {

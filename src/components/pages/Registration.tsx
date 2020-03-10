@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import * as Middleware from "../../middlewares";
 
 interface PropsInterface {
@@ -153,6 +153,9 @@ class Registration extends React.Component<PropsInterface, StateInterface> {
   }
 
   public render() {
+    if (this.props.Store.Game.length === 0) {
+      return <Redirect to="/" />;
+    }
     return (
       <>
         <div className="sign-bg">

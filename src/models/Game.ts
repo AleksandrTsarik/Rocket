@@ -10,7 +10,7 @@ export default class Game extends ModelPrototype {
       throw Exception;
     }
   }
-  public async uploadGameDate(data: any): Promise<any[]> {
+  public async uploadGameData(data: any): Promise<any[]> {
     try {
       return this.withUrl("saveResults")
         .setMethod(Method.POST)

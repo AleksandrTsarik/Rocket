@@ -16,8 +16,8 @@ interface StateInterface {
   timer: number;
   start_at: number;
   timerSeconds: number;
-  fall: number;
-  fallTimer: boolean;
+  fine: number;
+  fineTimer: boolean;
   step: number;
   right: number;
   minutes: string;
@@ -44,8 +44,8 @@ class Game extends React.Component<PropsInterface, StateInterface> {
       timer: 0,
       start_at: 0,
       timerSeconds: 0,
-      fall: 0,
-      fallTimer: false,
+      fine: 0,
+      fineTimer: false,
       step: 0,
       right: 0,
       minutes: "00",
@@ -88,8 +88,8 @@ class Game extends React.Component<PropsInterface, StateInterface> {
         {
           runGame: true,
           questions: shuffledQuestions,
-          timer: settings.time,
-          fall: settings.fall,
+          timer: parseInt(settings.time, 10),
+          fine: parseInt(settings.fine, 10),
           start_at: Math.round(new Date().getTime() / 1000),
         },
         () => {
@@ -154,13 +154,13 @@ class Game extends React.Component<PropsInterface, StateInterface> {
     }
 
     // wrong answer -> minus time
-    if (this.state.fallTimer) {
-      let newTimer = this.state.timer - this.props.Store.Game.config.fall;
+    if (this.state.fineTimer) {
+      let newTimer = this.state.timer - this.state.fine;
       if (newTimer < 0) {
         newTimer = 0;
       }
       this.setState({
-        fallTimer: false,
+        fineTimer: false,
         timer: newTimer,
       });
     }
@@ -217,8 +217,16 @@ class Game extends React.Component<PropsInterface, StateInterface> {
       },
     };
 
-    this.props.Dispatch(Middleware.Game.uploadGameDate(game));
+    this.props.Dispatch(Middleware.Game.uploadGameData(game));
+    this.props.Dispatch(
+      Middleware.Player.result({
+        score: this.state.score,
+        correct: this.state.right,
+        total: this.state.questions.length,
+      })
+    );
 
+    this.props.Dispatch(Middleware.Game.status("end"));
     this.props.Dispatch(Middleware.Modal.open("Win"));
   }
 
@@ -233,7 +241,7 @@ class Game extends React.Component<PropsInterface, StateInterface> {
       } else {
         this.setAnimation(false);
         this.setState({
-          fallTimer: true,
+          fineTimer: true,
         });
       }
       this.setState({
@@ -259,8 +267,6 @@ class Game extends React.Component<PropsInterface, StateInterface> {
         this.setTimer();
       }
       this.timerGame = setTimeout(() => this.clock(), 100); // timeout дабы избежать лагов при работе с таймером
-    } else {
-      this.props.Dispatch(Middleware.Modal.open("Win"));
     }
   }
 
@@ -277,11 +283,15 @@ class Game extends React.Component<PropsInterface, StateInterface> {
   exit() {
     clearTimeout(this.timerGame);
     clearTimeout(this.timerBackground);
+    this.gg();
     this.props.history.push("/");
     this.componentWillUnmount();
   }
 
   public render() {
+    if (this.props.Store.Player.length === 0) {
+      return <Redirect to="/" />;
+    }
     if (this.state.questions !== null) {
       return (
         <>
