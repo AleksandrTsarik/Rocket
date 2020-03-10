@@ -19,8 +19,8 @@ class Win extends React.Component<PropsInterface> {
             <div className="title">Good job!</div>
             <div className="result">
               <div>Your Result:</div>
-              <div className="distance">
-                Distance <span>{this.props.Store.Player.distance} pc</span>
+              <div className="score">
+                Distance <span>{this.props.Store.Player.score} pc</span>
               </div>
               <div className="questions">
                 Correct questions:{" "}
@@ -30,19 +30,24 @@ class Win extends React.Component<PropsInterface> {
                 </span>
               </div>
             </div>
-            <div className="best-result">
-              <div>Best Result:</div>
-              <div className="distance">
-                Distance <span>{this.props.Store.Game.best.distance} pc</span>
+            {this.props.Store.Game.best !== null ? (
+              <div className="best-result">
+                <div>Best Result:</div>
+                <div className="score">
+                  Distance <span>{this.props.Store.Game.best.score} pc</span>
+                </div>
+                <div className="questions">
+                  Correct questions:{" "}
+                  <span>
+                    {this.props.Store.Game.best.correct_answers} (
+                    {this.props.Store.Game.questions.length})
+                  </span>
+                </div>
               </div>
-              <div className="questions">
-                Correct questions:{" "}
-                <span>
-                  {this.props.Store.Game.best.correct_answers} (
-                  {this.props.Store.Game.questions.length})
-                </span>
-              </div>
-            </div>
+            ) : (
+              <></>
+            )}
+
             <div className="btn-box">
               <Link
                 to="/"

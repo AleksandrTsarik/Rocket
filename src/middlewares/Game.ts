@@ -7,9 +7,12 @@ export default class Game {
       new Models.Game()
         .initialData()
         .then((data: any) => {
-          localStorage.setItem("settings", JSON.stringify(data.settings));
-          localStorage.setItem("top", JSON.stringify(data.bestResults));
-          localStorage.setItem("questions", JSON.stringify(data.questions));
+          localStorage.setItem("settings", JSON.stringify(data.data.settings));
+          localStorage.setItem("top", JSON.stringify(data.data.top));
+          localStorage.setItem("questions", JSON.stringify(data.data.questions));
+          dispatch(Store.Game.start(data.data.questions));
+          dispatch(Store.Game.config(data.data.settings));
+          dispatch(Store.Game.best(data.data.top));
         })
         .catch((Exception: any) => {
           console.log("ethernet is done for initialData", Exception);
@@ -18,18 +21,28 @@ export default class Game {
   }
   public static uploadGameDate(data: any) {
     return async () => {
+      const getGame = localStorage.getItem("games");
+      let games = [];
+      if (getGame !== undefined) {
+        games = getGame ? JSON.parse(getGame) : [];
+        games.push(data);
+      } else {
+        games = [data];
+      }
+
       new Models.Game()
-        .uploadGameDate(data)
+        .uploadGameDate({ data })
         .then((data: any) => {
-          console.log(data);
           if (data.status === "success") {
-          } else {
-            console.log("save to local");
-            localStorage.clear();
+            localStorage.removeItem("games");
           }
         })
         .catch((Exception: any) => {
           console.log("ethernet is done for uploadGameDate:", Exception);
+          const getGame = localStorage.getItem("games");
+          const games = getGame ? JSON.parse(getGame) : [];
+          games.push(data);
+          localStorage.setItem("games", JSON.stringify(games));
         });
     };
   }
@@ -37,23 +50,10 @@ export default class Game {
   // old middlewares
   public static start(data: any) {
     return async (dispatch: any) => {
-      new Models.Game()
-        .start(data)
-        .then((data: any) => {
-          // save config to storage
-          dispatch(Store.Game.start(data.questions));
-          dispatch(Store.Game.config(data.config));
-          dispatch(Store.Game.best(data.bestResults));
-          dispatch(Store.Game.status("start"));
-
-          // TODO: remove before backend runup
-          localStorage.setItem("settings", JSON.stringify(data.config));
-          localStorage.setItem("top", JSON.stringify(data.bestResults));
-          localStorage.setItem("questions", JSON.stringify(data.questions));
-        })
-        .catch((Exception) => {});
+      dispatch(Store.Game.status("start"));
     };
   }
+
   public static send(data: any) {
     return async (dispatch: any) => {
       const getGame = localStorage.getItem("games");

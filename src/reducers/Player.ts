@@ -11,7 +11,7 @@ export default function Player(state = [], action: any) {
         ...state,
         time: action.data.time,
         correct_answers: action.data.correct_answers,
-        distance: action.data.distance,
+        score: action.data.score,
       };
     default:
       return state;

@@ -1,10 +1,10 @@
 import ModelPrototype, { Method } from "./ModelPrototype";
 
-export default class Player extends ModelPrototype {
+export default class Game extends ModelPrototype {
   public async initialData(): Promise<any[]> {
     try {
       return this.withUrl("initialData")
-        .setMethod(Method.POST)
+        .setMethod(Method.GET)
         .request();
     } catch (Exception) {
       throw Exception;
@@ -12,7 +12,7 @@ export default class Player extends ModelPrototype {
   }
   public async uploadGameDate(data: any): Promise<any[]> {
     try {
-      return this.withUrl("uploadGameDate")
+      return this.withUrl("saveResults")
         .setMethod(Method.POST)
         .request(data);
     } catch (Exception) {

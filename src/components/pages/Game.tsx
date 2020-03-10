@@ -22,7 +22,7 @@ interface StateInterface {
   right: number;
   minutes: string;
   seconds: string;
-  distance: number;
+  score: number;
   questions: any;
   runGame: boolean;
   backgroundPosition: number;
@@ -50,7 +50,7 @@ class Game extends React.Component<PropsInterface, StateInterface> {
       right: 0,
       minutes: "00",
       seconds: "00",
-      distance: 1500,
+      score: 1500,
       questions: [],
       runGame: false,
       backgroundPosition: 0,
@@ -212,19 +212,12 @@ class Game extends React.Component<PropsInterface, StateInterface> {
       Game: {
         started_at: this.state.start_at,
         end_at: Math.round(new Date().getTime() / 1000),
-        score: this.state.distance,
+        score: this.state.score,
+        count: this.state.step + 1,
       },
     };
-    // this.props.Dispatch(
-    //   Middleware.Game.send({
-    //     firstname: this.props.Store.Player.firstname,
-    //     lastname: this.props.Store.Player.lastname,
-    //     email: this.props.Store.Player.email,
-    //     distance: this.state.distance,
-    //     correct_answers: this.state.right,
-    //   })
-    // );
-    this.props.Dispatch(Middleware.Game.send(game));
+
+    this.props.Dispatch(Middleware.Game.uploadGameDate(game));
 
     this.props.Dispatch(Middleware.Modal.open("Win"));
   }
@@ -234,7 +227,7 @@ class Game extends React.Component<PropsInterface, StateInterface> {
       if (answer === 1) {
         this.setAnimation(true);
         this.setState({
-          distance: this.state.distance + this.props.Store.Game.questions[this.state.step].distance,
+          score: this.state.score + this.props.Store.Game.questions[this.state.step].score,
           right: this.state.right + 1,
         });
       } else {
@@ -311,7 +304,7 @@ class Game extends React.Component<PropsInterface, StateInterface> {
               <div className="container">
                 <div className="wrapper">
                   <div className="info">
-                    <div className="distance">{this.state.distance} км</div>
+                    <div className="score">{this.state.score} км</div>
                     <div className="logo" />
                     <div className="time">
                       {this.state.minutes} : {this.state.seconds}
