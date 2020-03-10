@@ -197,7 +197,7 @@ class Game extends React.Component<PropsInterface, StateInterface> {
       this.setState({
         blockIntarface: false,
       });
-    }, 15); // set 1500
+    }, 1500);
   }
 
   gg() {
@@ -335,20 +335,18 @@ class Game extends React.Component<PropsInterface, StateInterface> {
                             <div className="cross" />
                           </a>
                           {this.state.questions[this.state.step].answers.map(
-                            (item: any, index: number) => {
-                              const text = Object.entries(item)[0][0];
-                              const answer = Object.entries(item)[0][1];
+                            (answer: any, index: number) => {
                               return (
                                 <button
                                   key={index}
-                                  onClick={() => this.gameStep(answer)}
+                                  onClick={() => this.gameStep(answer.correctly)}
                                   disabled={this.state.blockIntarface}
                                   className={
                                     "btn btn-default btn-block btn-md " +
                                     (this.state.blockIntarface ? "block-answer" : "")
                                   }
                                 >
-                                  <b>{letters[index]}:</b> {text}
+                                  <b>{letters[index]}:</b> {answer.answer}
                                 </button>
                               );
                             }
