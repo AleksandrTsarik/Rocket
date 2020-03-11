@@ -10,7 +10,6 @@ export default class Player {
   public static create(data: any) {
     return async (Dispatch: any) => {
       Dispatch(Store.Player.create(data));
-      localStorage.setItem("player", JSON.stringify(data));
     };
   }
 
