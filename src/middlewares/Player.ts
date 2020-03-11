@@ -8,13 +8,9 @@ export default class Player {
    * @return function(Dispatch)->User
    */
   public static create(data: any) {
-    return async (dispatch: any) => {
-      new Models.Player()
-        .create(data)
-        .then((data: any[]) => {
-          dispatch(Store.Player.create(data.data));
-        })
-        .catch((Exception) => {});
+    return async (Dispatch: any) => {
+      Dispatch(Store.Player.create(data));
+      localStorage.setItem("player", JSON.stringify(data));
     };
   }
 
@@ -25,21 +21,7 @@ export default class Player {
   }
 
   /**
-   * Отправить юзера на бек
-   *
-   * @return function(Dispatch)->User
-   */
-  public static send(data: any) {
-    return async (dispatch: any) => {
-      new Models.Game()
-        .send(data)
-        .then(() => {})
-        .catch((Exception) => {});
-    };
-  }
-
-  /**
-   * Очистить юзера
+   * Очистить юзера, наигрался
    *
    * @return function(Dispatch)->User
    */

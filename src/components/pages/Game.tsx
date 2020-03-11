@@ -14,14 +14,15 @@ interface PropsInterface {
 
 interface StateInterface {
   timer: number;
+  start_at: number;
   timerSeconds: number;
-  fall: number;
-  fallTimer: boolean;
+  fine: number;
+  fineTimer: boolean;
   step: number;
   right: number;
   minutes: string;
   seconds: string;
-  distance: number;
+  score: number;
   questions: any;
   runGame: boolean;
   backgroundPosition: number;
@@ -41,14 +42,15 @@ class Game extends React.Component<PropsInterface, StateInterface> {
     super(Props);
     this.state = {
       timer: 0,
+      start_at: 0,
       timerSeconds: 0,
-      fall: 0,
-      fallTimer: false,
+      fine: 0,
+      fineTimer: false,
       step: 0,
       right: 0,
       minutes: "00",
       seconds: "00",
-      distance: 1500,
+      score: 1500,
       questions: [],
       runGame: false,
       backgroundPosition: 0,
@@ -61,7 +63,8 @@ class Game extends React.Component<PropsInterface, StateInterface> {
       blockIntarface: false,
     };
     this.timeToString = this.timeToString.bind(this);
-    this.setRocketAnimation = this.setRocketAnimation.bind(this);
+    this.setAnimation = this.setAnimation.bind(this);
+    this.gg = this.gg.bind(this);
   }
 
   public componentDidMount() {
@@ -75,12 +78,19 @@ class Game extends React.Component<PropsInterface, StateInterface> {
       prevProps !== this.props &&
       this.state.runGame === false
     ) {
+      // get from localStorage
+      const settings = JSON.parse(localStorage.settings);
+      const questions = JSON.parse(localStorage.questions);
+      const shuffledQuestions = questions.sort(() => {
+        return Math.random() - 0.5;
+      });
       this.setState(
         {
           runGame: true,
-          questions: this.props.Store.Game.questions,
-          timer: this.props.Store.Game.config.time,
-          fall: this.props.Store.Game.config.fall,
+          questions: shuffledQuestions,
+          timer: parseInt(settings.time, 10),
+          fine: parseInt(settings.fine, 10),
+          start_at: Math.round(new Date().getTime() / 1000),
         },
         () => {
           this.clock();
@@ -144,19 +154,19 @@ class Game extends React.Component<PropsInterface, StateInterface> {
     }
 
     // wrong answer -> minus time
-    if (this.state.fallTimer) {
-      let newTimer = this.state.timer - this.props.Store.Game.config.fall;
+    if (this.state.fineTimer) {
+      let newTimer = this.state.timer - this.state.fine;
       if (newTimer < 0) {
         newTimer = 0;
       }
       this.setState({
-        fallTimer: false,
+        fineTimer: false,
         timer: newTimer,
       });
     }
   }
 
-  setRocketAnimation(correct: boolean) {
+  setAnimation(correct: boolean) {
     let timing = 0;
     this.setState({
       blockIntarface: true,
@@ -190,19 +200,48 @@ class Game extends React.Component<PropsInterface, StateInterface> {
     }, 1500);
   }
 
+  gg() {
+    const game = {
+      Player: {
+        firstname: this.props.Store.Player.firstname,
+        lastname: this.props.Store.Player.lastname,
+        email: this.props.Store.Player.email,
+        created_at: this.props.Store.Player.created_at,
+        city_id: this.props.Store.Player.city_id,
+      },
+      Game: {
+        started_at: this.state.start_at,
+        end_at: Math.round(new Date().getTime() / 1000),
+        score: this.state.score,
+        count: this.state.step + 1,
+      },
+    };
+
+    this.props.Dispatch(Middleware.Game.uploadGameData(game));
+    this.props.Dispatch(
+      Middleware.Player.result({
+        score: this.state.score,
+        correct: this.state.right,
+        total: this.state.questions.length,
+      })
+    );
+
+    this.props.Dispatch(Middleware.Game.status("end"));
+    this.props.Dispatch(Middleware.Modal.open("Win"));
+  }
+
   gameStep(answer: number) {
     if (this.state.timer > 0) {
       if (answer === 1) {
-        this.setRocketAnimation(true);
+        this.setAnimation(true);
         this.setState({
-          distance: this.state.distance + this.props.Store.Game.questions[this.state.step].distance,
+          score: this.state.score + this.props.Store.Game.questions[this.state.step].score,
           right: this.state.right + 1,
         });
       } else {
-        this.setRocketAnimation(false);
-        // set bad news
+        this.setAnimation(false);
         this.setState({
-          fallTimer: true,
+          fineTimer: true,
         });
       }
       this.setState({
@@ -210,47 +249,12 @@ class Game extends React.Component<PropsInterface, StateInterface> {
       });
     } else {
       // GG time is up
-      this.props.Dispatch(
-        Middleware.Player.result({
-          time: this.state.timer,
-          distance: this.state.distance,
-          correct_answers: this.state.right,
-        })
-      );
-      this.props.Dispatch(Middleware.Game.best());
-
-      this.props.Dispatch(
-        Middleware.Game.send({
-          player_id: this.props.Store.Player.id,
-          distance: this.state.distance,
-          correct_answers: this.state.right,
-        })
-      );
-
-      this.props.Dispatch(Middleware.Modal.open("Win"));
+      this.gg();
     }
 
     if (this.state.step >= this.state.questions.length - 1) {
       // GG end game
-      this.props.Dispatch(
-        Middleware.Player.result({
-          player_id: this.props.Store.Player.id,
-          distance: this.state.distance,
-          correct_answers: this.state.right,
-          time: this.state.timer,
-        })
-      );
-      this.props.Dispatch(Middleware.Game.best());
-
-      this.props.Dispatch(
-        Middleware.Game.send({
-          player_id: this.props.Store.Player.id,
-          distance: this.state.distance,
-          correct_answers: this.state.right,
-        })
-      );
-
-      this.props.Dispatch(Middleware.Modal.open("Win"));
+      this.gg();
     }
   }
 
@@ -263,8 +267,6 @@ class Game extends React.Component<PropsInterface, StateInterface> {
         this.setTimer();
       }
       this.timerGame = setTimeout(() => this.clock(), 100); // timeout дабы избежать лагов при работе с таймером
-    } else {
-      this.props.Dispatch(Middleware.Modal.open("Win"));
     }
   }
 
@@ -281,11 +283,15 @@ class Game extends React.Component<PropsInterface, StateInterface> {
   exit() {
     clearTimeout(this.timerGame);
     clearTimeout(this.timerBackground);
+    this.gg();
     this.props.history.push("/");
     this.componentWillUnmount();
   }
 
   public render() {
+    if (this.props.Store.Player.length === 0) {
+      return <Redirect to="/" />;
+    }
     if (this.state.questions !== null) {
       return (
         <>
@@ -308,7 +314,7 @@ class Game extends React.Component<PropsInterface, StateInterface> {
               <div className="container">
                 <div className="wrapper">
                   <div className="info">
-                    <div className="distance">{this.state.distance} км</div>
+                    <div className="score">{this.state.score} км</div>
                     <div className="logo" />
                     <div className="time">
                       {this.state.minutes} : {this.state.seconds}
@@ -329,20 +335,18 @@ class Game extends React.Component<PropsInterface, StateInterface> {
                             <div className="cross" />
                           </a>
                           {this.state.questions[this.state.step].answers.map(
-                            (item: any, index: number) => {
-                              const text = Object.entries(item)[0][0];
-                              const answer = Object.entries(item)[0][1];
+                            (answer: any, index: number) => {
                               return (
                                 <button
                                   key={index}
-                                  onClick={() => this.gameStep(answer)}
+                                  onClick={() => this.gameStep(answer.correctly)}
                                   disabled={this.state.blockIntarface}
                                   className={
                                     "btn btn-default btn-block btn-md " +
                                     (this.state.blockIntarface ? "block-answer" : "")
                                   }
                                 >
-                                  <b>{letters[index]}:</b> {text}
+                                  <b>{letters[index]}:</b> {answer.answer}
                                 </button>
                               );
                             }
