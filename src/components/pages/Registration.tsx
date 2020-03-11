@@ -107,6 +107,7 @@ class Registration extends React.Component<PropsInterface, StateInterface> {
             type={props.type}
             name={props.name}
             id={props.name}
+            autoComplete="off"
             className={
               "input " +
               (props.value === "" && props.required && this.state.errors ? " input-error " : "") +
@@ -134,6 +135,7 @@ class Registration extends React.Component<PropsInterface, StateInterface> {
               type="checkbox"
               name={props.name}
               checked={props.value}
+              autoComplete="off"
               onChange={this.onChangeHandle}
               className="check-input"
             />
