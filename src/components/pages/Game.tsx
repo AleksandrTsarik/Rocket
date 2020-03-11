@@ -65,6 +65,7 @@ class Game extends React.Component<PropsInterface, StateInterface> {
     this.timeToString = this.timeToString.bind(this);
     this.setAnimation = this.setAnimation.bind(this);
     this.gg = this.gg.bind(this);
+    this.setTimer = this.setTimer.bind(this);
   }
 
   public componentDidMount() {
@@ -170,6 +171,10 @@ class Game extends React.Component<PropsInterface, StateInterface> {
         fallTimer: false,
         timer: newTimer,
       });
+    }
+
+    if (this.state.timer <= 0) {
+      this.gg();
     }
   }
 
