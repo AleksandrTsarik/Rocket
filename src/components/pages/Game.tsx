@@ -16,8 +16,8 @@ interface StateInterface {
   timer: number;
   start_at: number;
   timerSeconds: number;
-  fine: number;
-  fineTimer: boolean;
+  fall: number;
+  fallTimer: boolean;
   step: number;
   right: number;
   minutes: string;
@@ -44,13 +44,13 @@ class Game extends React.Component<PropsInterface, StateInterface> {
       timer: 0,
       start_at: 0,
       timerSeconds: 0,
-      fine: 0,
-      fineTimer: false,
+      fall: 0,
+      fallTimer: false,
       step: 0,
       right: 0,
       minutes: "00",
       seconds: "00",
-      score: 1500,
+      score: 0,
       questions: [],
       runGame: false,
       backgroundPosition: 0,
@@ -79,17 +79,24 @@ class Game extends React.Component<PropsInterface, StateInterface> {
       this.state.runGame === false
     ) {
       // get from localStorage
-      const settings = JSON.parse(localStorage.settings);
-      const questions = JSON.parse(localStorage.questions);
-      const shuffledQuestions = questions.sort(() => {
+      const settings = this.props.Store.Game.config;
+      const questions = this.props.Store.Game.questions;
+      questions.sort(() => {
         return Math.random() - 0.5;
       });
+      questions.forEach((question: any) => {
+        // TODO: включить для пемешивания ответов
+        // question.answers.sort(() => {
+        //   return Math.random() - 0.5;
+        // });
+      });
+
       this.setState(
         {
           runGame: true,
-          questions: shuffledQuestions,
+          questions,
           timer: parseInt(settings.time, 10),
-          fine: parseInt(settings.fine, 10),
+          fall: parseInt(settings.fall, 10),
           start_at: Math.round(new Date().getTime() / 1000),
         },
         () => {
@@ -154,13 +161,13 @@ class Game extends React.Component<PropsInterface, StateInterface> {
     }
 
     // wrong answer -> minus time
-    if (this.state.fineTimer) {
-      let newTimer = this.state.timer - this.state.fine;
+    if (this.state.fallTimer) {
+      let newTimer = this.state.timer - this.state.fall;
       if (newTimer < 0) {
         newTimer = 0;
       }
       this.setState({
-        fineTimer: false,
+        fallTimer: false,
         timer: newTimer,
       });
     }
@@ -221,7 +228,7 @@ class Game extends React.Component<PropsInterface, StateInterface> {
     this.props.Dispatch(
       Middleware.Player.result({
         score: this.state.score,
-        correct: this.state.right,
+        correct_answers: this.state.right,
         total: this.state.questions.length,
       })
     );
@@ -230,18 +237,18 @@ class Game extends React.Component<PropsInterface, StateInterface> {
     this.props.Dispatch(Middleware.Modal.open("Win"));
   }
 
-  gameStep(answer: number) {
+  gameStep(answer: boolean) {
     if (this.state.timer > 0) {
-      if (answer === 1) {
+      if (answer === true) {
         this.setAnimation(true);
         this.setState({
-          score: this.state.score + this.props.Store.Game.questions[this.state.step].score,
+          score: this.state.score + this.state.questions[this.state.step].score,
           right: this.state.right + 1,
         });
       } else {
         this.setAnimation(false);
         this.setState({
-          fineTimer: true,
+          fallTimer: true,
         });
       }
       this.setState({

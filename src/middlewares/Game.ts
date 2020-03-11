@@ -17,7 +17,7 @@ export default class Game {
   public static uploadGameData(data: any) {
     return async () => {
       new Models.Game()
-        .uploadGameData(data)
+        .uploadGameData([data])
         .then((data: any) => {})
         .catch((Exception: any) => {});
     };
