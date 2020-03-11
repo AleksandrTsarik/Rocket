@@ -86,10 +86,9 @@ class Game extends React.Component<PropsInterface, StateInterface> {
         return Math.random() - 0.5;
       });
       questions.forEach((question: any) => {
-        // TODO: включить для пемешивания ответов
-        // question.answers.sort(() => {
-        //   return Math.random() - 0.5;
-        // });
+        question.answers.sort(() => {
+          return Math.random() - 0.5;
+        });
       });
 
       this.setState(
