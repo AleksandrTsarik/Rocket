@@ -7,7 +7,7 @@ export default function Player(state = [], action: any) {
     case Action.Store.Player.CLEAR:
       return [];
     case Action.Store.Player.RESULT:
-      console.log(action.data)
+      console.log(action.data);
       return {
         ...state,
         time: action.data.time,
