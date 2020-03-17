@@ -199,7 +199,7 @@ class Registration extends React.Component<PropsInterface, StateInterface> {
                     value={this.state.city}
                     label="I live in St. Petersburg"
                     id="sign-c2"
-                    required={true}
+                    required={false}
                   />
                 </div>
                 {/* <button className="btn btn-block btn-primary btn-md" onClick={this.registration}>
